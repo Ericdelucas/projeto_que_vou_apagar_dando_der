@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+    <ImageView android:id="@+id/media_image" android:layout_width="match_parent" android:layout_height="280dp" android:scaleType="fitCenter" android:contentDescription="@null" />
+    <VideoView android:id="@+id/media_video" android:layout_width="match_parent" android:layout_height="280dp" android:visibility="gone" />
+    <TextView android:id="@+id/media_error" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp"
+        android:text="@string/feed_video_error" android:visibility="gone" />
+</LinearLayout>

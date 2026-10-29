@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/white">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:orientation="horizontal"
+        android:gravity="center_vertical" android:paddingHorizontal="16dp" android:background="@drawable/bg_red_header">
+        <ImageButton android:id="@+id/find_users" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/ic_user_add"
+            android:background="?attr/selectableItemBackgroundBorderless" app:tint="@color/white" android:contentDescription="@string/title_usuarios" />
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+        <ImageButton android:id="@+id/header_share" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/ic_share"
+            android:background="?attr/selectableItemBackgroundBorderless" app:tint="@color/white" android:contentDescription="@string/btn_compartilhar_perfil" />
+        <ImageButton android:id="@+id/profile_menu" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/ic_menu_hamburger"
+            android:background="?attr/selectableItemBackgroundBorderless" app:tint="@color/white" android:contentDescription="@string/title_configuracoes" />
+    </LinearLayout>
+    <ProgressBar android:id="@+id/profile_progress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" />
+    <TextView android:id="@+id/profile_message" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/retry_button" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" android:text="@string/feed_retry" android:visibility="gone" />
+    <LinearLayout android:id="@+id/profile_content" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:orientation="vertical" android:padding="16dp" android:visibility="gone">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+            <ImageView android:id="@+id/user_avatar" android:layout_width="70dp" android:layout_height="70dp" android:background="@drawable/bg_circle_avatar" android:contentDescription="@string/profile_avatar" />
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="16dp" android:orientation="vertical">
+                <TextView android:id="@+id/user_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="@color/black" android:textStyle="bold" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <TextView android:id="@+id/posts_count" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="@color/black" />
+                    <TextView android:id="@+id/followers_count" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="@color/black" />
+                    <TextView android:id="@+id/following_count" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView android:id="@+id/user_bio" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:maxLines="3" android:ellipsize="end" android:textColor="@color/black" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginVertical="12dp">
+            <com.google.android.material.button.MaterialButton android:id="@+id/edit_profile" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textSize="12sp" android:text="@string/btn_editar_perfil" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/share_profile" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textSize="12sp" android:text="@string/btn_compartilhar_perfil" />
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gray_border" />
+        <TextView android:id="@+id/media_empty" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp" android:text="@string/profile_media_empty" android:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView android:paddingBottom="88dp" android:clipToPadding="false" android:id="@+id/media_grid" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+    </LinearLayout>
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/new_post" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end" android:layout_margin="20dp"
+        android:src="@drawable/ic_add_post" android:contentDescription="@string/new_post_title"
+        android:visibility="gone" app:backgroundTint="@color/red_primary" app:tint="@color/white" />
+</FrameLayout>

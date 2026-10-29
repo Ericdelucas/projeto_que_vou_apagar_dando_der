@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="64dp"
+    android:background="@drawable/bg_table_cell" android:orientation="horizontal" android:gravity="center_vertical"
+    android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground">
+    <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="2"
+        android:orientation="horizontal" android:gravity="center_vertical" android:padding="8dp">
+        <ImageView android:id="@+id/user_avatar" android:layout_width="28dp" android:layout_height="28dp"
+            android:background="@drawable/bg_circle_avatar" android:layout_marginEnd="8dp" android:contentDescription="@null" />
+        <TextView android:id="@+id/user_name" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:maxLines="2" android:ellipsize="end" android:textColor="@color/black" android:textSize="14sp" />
+    </LinearLayout>
+    <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/gray_border" />
+    <TextView android:id="@+id/user_role" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.25"
+        android:gravity="center" android:textColor="@color/black" android:textSize="12sp" />
+    <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/gray_border" />
+    <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
+        android:orientation="vertical" android:gravity="center" android:paddingHorizontal="3dp">
+        <com.example.app.users.ActivityChartView android:id="@+id/activity_chart"
+            android:layout_width="match_parent" android:layout_height="32dp" />
+        <TextView android:id="@+id/user_activity" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center" android:textSize="10sp" android:textColor="@color/gray_text" />
+    </LinearLayout>
+</LinearLayout>

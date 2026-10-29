@@ -1,0 +1,22 @@
+
+# Fotos enviadas ao backend local
+back/uploads/
+
+# Dependências e configuração local
+back/node_modules/
+back/.env
+back/.env.*
+!back/.env.example
+front/projeto_que_vou_apagar_dando_der/build/
+front/projeto_que_vou_apagar_dando_der/.gradle/
+front/projeto_que_vou_apagar_dando_der/local.properties
+**/build/
+**/.cxx/
+**/.externalNativeBuild/
+*.apk
+*.aab
+*.jks
+*.keystore
+.agents/
+.codex/
+.aws/

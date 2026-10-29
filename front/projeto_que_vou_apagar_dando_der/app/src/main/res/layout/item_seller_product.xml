@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:minHeight="64dp" android:background="@drawable/bg_table_cell"
+    android:orientation="horizontal" android:gravity="center_vertical">
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_weight="3" android:orientation="vertical" android:padding="12dp">
+        <TextView android:id="@+id/product_title" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/black" android:textSize="16sp" />
+        <TextView android:id="@+id/product_status" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/gray_text" android:textSize="12sp" />
+    </LinearLayout>
+    <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/black" />
+    <LinearLayout android:id="@+id/requests_cell" android:layout_width="0dp" android:layout_height="match_parent"
+        android:layout_weight="1" android:orientation="vertical" android:gravity="center"
+        android:padding="4dp" android:clickable="true" android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+        <TextView android:id="@+id/requests_count" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:minWidth="28dp" android:minHeight="28dp" android:gravity="center"
+            android:background="@drawable/bg_card_border" android:textColor="@color/black" android:textStyle="bold" />
+        <TextView android:id="@+id/pending_count" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center" android:textColor="@color/gray_text" android:textSize="10sp" />
+    </LinearLayout>
+</LinearLayout>
