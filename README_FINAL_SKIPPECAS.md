@@ -6,7 +6,7 @@ O SkipPeças reúne descoberta de peças automotivas, anúncios, favoritos, perf
 
 ## Testar o APK agora, sem MySQL
 
-O backend oferece **fallback automático para SQLite em memória**, disponível no Node.js 24, sem instalar novas dependências. Em desenvolvimento, ao receber ECONNREFUSED ou outra falha de conectividade na primeira conexão MySQL, cria uma base de demonstração completa e continua atendendo os mesmos endpoints.
+O backend oferece **fallback automático para SQLite em memória**, disponível no Node.js 24, sem instalar novas dependências. No modo `auto`, ao receber ECONNREFUSED ou outra falha de conectividade na primeira conexão MySQL, cria uma base de demonstração completa e continua atendendo os mesmos endpoints.
 
 ```sh
 cd back
@@ -21,7 +21,7 @@ DB_MODE=auto npm start    # MySQL preferencial; fallback se estiver inacessível
 DB_MODE=mysql npm start   # MySQL obrigatório; nenhuma demonstração automática.
 ```
 
-Sem DB_MODE explícito, o padrão é `auto` em desenvolvimento e `mysql` com `NODE_ENV=production`. Erros de credenciais, schema ou SQL não são tratados como indisponibilidade de rede e não ativam o fallback. O timeout inicial de conexão é de dois segundos.
+Sem DB_MODE explícito, o padrão é `auto`, inclusive com `NODE_ENV=production`, para permitir testes do APK sem MySQL. Use `DB_MODE=mysql` quando a persistência for obrigatória. Erros de credenciais, schema ou SQL não são tratados como indisponibilidade de rede e não ativam o fallback. O timeout inicial de conexão é de dois segundos.
 
 ### Logins de demonstração
 

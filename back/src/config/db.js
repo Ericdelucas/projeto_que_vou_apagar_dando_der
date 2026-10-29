@@ -3,7 +3,9 @@ import mysql from 'mysql2/promise';
 import { randomBytes } from 'node:crypto';
 import { createDatabaseRouter } from './databaseRouter.js';
 
-const mode = process.env.DB_MODE || (process.env.NODE_ENV === 'production' ? 'mysql' : 'auto');
+// O APK pode testar a API sem MySQL em qualquer ambiente. Para exigir o
+// banco persistente explicitamente, configure DB_MODE=mysql.
+const mode = process.env.DB_MODE || 'auto';
 const mysqlPool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
