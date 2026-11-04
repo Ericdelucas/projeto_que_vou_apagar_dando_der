@@ -2,7 +2,7 @@ import 'dotenv/config';
 import pool from './config/db.js';
 import app from './app.js';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 try {
   await pool.initialize();
   console.log(`Banco ativo: ${pool.status().engine}.`);
