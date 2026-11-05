@@ -16,16 +16,26 @@ class EditProfileDialogFragment : DialogFragment() {
     private var binding: DialogEditProfileBinding? = null
     private lateinit var model: ProfileViewModel
     private var initialVersion = 0
+    private var photo: android.net.Uri? = null
+    private val picker = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) {
+            runCatching { requireContext().contentResolver.takePersistableUriPermission(uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+            photo = uri
+            binding?.let { com.bumptech.glide.Glide.with(this).load(uri).circleCrop().into(it.avatarPreview) }
+        }
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         model = ViewModelProvider(requireParentFragment())[ProfileViewModel::class.java]
         initialVersion = savedInstanceState?.getInt("version") ?: (model.state.value?.savedVersion ?: 0)
         model.clearSaveError()
         val ui = DialogEditProfileBinding.inflate(layoutInflater)
         binding = ui
+        photo = savedInstanceState?.getString("photo")?.let { android.net.Uri.parse(it) }
+        ui.selectAvatar.setOnClickListener { picker.launch(arrayOf("image/*")) }
+        com.bumptech.glide.Glide.with(this).load(photo ?: com.example.app.network.MediaUrl.resolve(model.state.value?.profile?.avatarUrl)).circleCrop().placeholder(R.drawable.ic_person).into(ui.avatarPreview)
         model.state.value?.profile?.let {
             ui.nameInput.setText(it.name)
             ui.emailInput.setText(it.email)
-            ui.avatarInput.setText(it.avatarUrl)
             ui.bioInput.setText(it.bio)
         }
         val dialog = MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.btn_editar_perfil)
@@ -34,7 +44,7 @@ class EditProfileDialogFragment : DialogFragment() {
         model.state.observe(this) { state ->
             if (state.savedVersion > initialVersion) { dismiss(); return@observe }
             binding?.apply {
-                listOf(nameInput, emailInput, avatarInput, bioInput).forEach { it.isEnabled = !state.saving }
+                listOf(nameInput, emailInput, bioInput, selectAvatar).forEach { it.isEnabled = !state.saving }
                 saveProgress.visibility = if (state.saving) View.VISIBLE else View.GONE
                 saveError.visibility = if (state.saveError == null) View.GONE else View.VISIBLE
                 state.saveError?.let { saveError.setText(it) }
@@ -55,23 +65,18 @@ class EditProfileDialogFragment : DialogFragment() {
             val ui = binding ?: return@setOnClickListener
             val name = ui.nameInput.text.toString().trim()
             val email = ui.emailInput.text.toString().trim()
-            val avatar = ui.avatarInput.text.toString().trim()
+            val avatar = model.state.value?.profile?.avatarUrl.orEmpty()
             if (name.isBlank()) { ui.nameInput.error = getString(R.string.seller_required); return@setOnClickListener }
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 ui.emailInput.error = getString(R.string.login_invalid_email); return@setOnClickListener
             }
-            if (avatar.isNotEmpty()) {
-                val url = runCatching { java.net.URI(avatar) }.getOrNull()
-                if (url?.scheme !in listOf("http", "https") || url?.host.isNullOrBlank() || url?.userInfo != null) {
-                    ui.avatarInput.error = getString(R.string.seller_url_error); return@setOnClickListener
-                }
-            }
-            model.save(UpdateProfileRequest(name, email, avatar, ui.bioInput.text.toString().trim()))
+            model.save(UpdateProfileRequest(name, email, avatar, ui.bioInput.text.toString().trim()), photo)
         }
     }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("version", initialVersion)
+        outState.putString("photo", photo?.toString())
     }
     override fun onDestroyView() { binding = null; super.onDestroyView() }
 }

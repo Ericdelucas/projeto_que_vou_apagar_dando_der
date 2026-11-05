@@ -12,8 +12,8 @@ android {
         applicationId = "com.example.app"
         minSdk = 24
         targetSdk = 37
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 3
+        versionName = "1.2"
         val apiUrl = providers.gradleProperty("skippecasApiUrl").orElse("https://skippecas-api.onrender.com/api/").get()
         require(apiUrl.endsWith("/api/")) { "skippecasApiUrl deve terminar em /api/" }
         require(apiUrl == "http://localhost:3000/api/" || apiUrl.startsWith("https://")) {

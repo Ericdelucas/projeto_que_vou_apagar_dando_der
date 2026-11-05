@@ -29,11 +29,13 @@ class VenderFragment : Fragment() {
     private var products = emptyList<SellerProduct>()
     private var selectedModel: String? = null
     private var selectedCategory: String? = null
+    private var selectedPiece: String? = null
 
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         selectedModel = state?.getString("model")
         selectedCategory = state?.getString("category")
+        selectedPiece = state?.getString("piece")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View =
@@ -74,6 +76,11 @@ class VenderFragment : Fragment() {
         ui.categoryFilter.setOnClickListener { anchor ->
             showFilter(anchor, products.mapNotNull { it.category }.distinct().sorted(), selectedCategory) {
                 selectedCategory = it; renderProducts()
+            }
+        }
+        ui.pieceFilter.setOnClickListener { anchor ->
+            showFilter(anchor, products.map { it.title }.distinct().sorted(), selectedPiece) {
+                selectedPiece = it; renderProducts()
             }
         }
         childFragmentManager.setFragmentResultListener("seller_refresh", viewLifecycleOwner) { _, _ ->
@@ -147,6 +154,7 @@ class VenderFragment : Fragment() {
         if (productsCall != null) return
         val ui = binding ?: return
         ui.addProduct.isEnabled = false
+        ui.pieceFilter.isEnabled = false
         ui.modelFilter.isEnabled = false
         ui.categoryFilter.isEnabled = false
         ui.sellerProgress.visibility = View.VISIBLE
@@ -171,13 +179,15 @@ class VenderFragment : Fragment() {
                             if (store.getToken() == token) store.clear()
                             showError(R.string.favorites_session_expired, login = true)
                         }
-                        403 -> showError(R.string.seller_forbidden, retry = false)
+                        403 -> { ui.productFilters.visibility = View.GONE; showError(R.string.seller_forbidden, retry = false) }
                         else -> showError(R.string.seller_load_error)
                     }
                     return
                 }
+                ui.productFilters.visibility = View.VISIBLE
                 products = result
                 ui.addProduct.isEnabled = true
+                ui.pieceFilter.isEnabled = true
                 ui.modelFilter.isEnabled = true
                 ui.categoryFilter.isEnabled = true
                 renderProducts()
@@ -193,12 +203,10 @@ class VenderFragment : Fragment() {
 
     private fun renderProducts() {
         val ui = binding ?: return
-        val visible = products.filter {
-            (selectedModel == null || it.model == selectedModel) &&
-                (selectedCategory == null || it.category == selectedCategory)
-        }
-        ui.modelLabel.text = selectedModel ?: getString(R.string.tipage_modelo)
-        ui.categoryLabel.text = selectedCategory ?: getString(R.string.categoria_ano)
+        val visible = com.example.app.seller.SellerFilters.apply(products, selectedModel, selectedCategory, selectedPiece)
+        ui.modelFilter.text = selectedModel ?: getString(R.string.filter_model)
+        ui.categoryFilter.text = selectedCategory ?: getString(R.string.filter_category)
+        ui.pieceFilter.text = selectedPiece ?: getString(R.string.filter_piece)
         sellerAdapter?.submitList(visible)
         ui.sellerProgress.visibility = View.GONE
         ui.productsList.visibility = if (visible.isEmpty()) View.GONE else View.VISIBLE
@@ -227,6 +235,7 @@ class VenderFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putString("model", selectedModel)
         outState.putString("category", selectedCategory)
+        outState.putString("piece", selectedPiece)
     }
 
     override fun onDestroyView() {

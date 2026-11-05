@@ -72,7 +72,7 @@ class ProductDetailsFragment : Fragment() {
                     product.category ?: "—", product.model ?: "—", product.location ?: "—")
                 ui.productImage.contentDescription = product.title
                 ui.productImage.visibility = if (product.imageUrl.isNullOrBlank()) View.GONE else View.VISIBLE
-                Glide.with(this@ProductDetailsFragment).load(product.imageUrl)
+                Glide.with(this@ProductDetailsFragment).load(com.example.app.network.MediaUrl.resolve(product.imageUrl))
                     .placeholder(R.drawable.ic_steering_wheel)
                     .error(R.drawable.ic_steering_wheel).into(ui.productImage)
                 ui.playVideo.visibility = if (product.videoUrl.isNullOrBlank()) View.GONE else View.VISIBLE

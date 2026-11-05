@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorSurface">
 
     <!-- Header Vender -->
     <LinearLayout
@@ -56,96 +56,26 @@
             android:layout_height="200dp" android:visibility="gone" />
     </LinearLayout>
 
-    <!-- Filter Bar -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="10dp">
-
-        <LinearLayout android:id="@+id/model_filter" android:clickable="true" android:focusable="true" android:enabled="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_red_pill"
-            android:paddingStart="12dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginEnd="6dp">
-
-            <TextView android:id="@+id/model_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tipage_modelo"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_arrow_down"
-                app:tint="@color/white"
-                android:contentDescription="Dropdown" />
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/category_filter" android:clickable="true" android:focusable="true" android:enabled="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_red_pill"
-            android:paddingStart="12dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView android:id="@+id/category_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/categoria_ano"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_arrow_down"
-                app:tint="@color/white"
-                android:contentDescription="Dropdown" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/btn_chat_vender"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_chat"
-            app:tint="@color/black"
-            android:contentDescription="Chat" />
-    </LinearLayout>
-
+    <HorizontalScrollView android:id="@+id/product_filters" android:layout_width="match_parent" android:layout_height="wrap_content" android:scrollbars="none">
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingHorizontal="12dp">
+        <com.google.android.material.button.MaterialButton android:id="@+id/model_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/filter_model" app:cornerRadius="24dp" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/category_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="@string/filter_category" app:cornerRadius="24dp" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/piece_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="@string/filter_piece" app:cornerRadius="24dp" />
+        <ImageButton android:id="@+id/btn_chat_vender" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/ic_chat" android:background="?attr/selectableItemBackgroundBorderless" app:tint="?attr/colorOnSurface" android:contentDescription="@string/title_usuarios" />
+    </LinearLayout></HorizontalScrollView>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_border" />
+        android:background="?attr/colorOutlineVariant" />
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
         android:layout_weight="1" android:orientation="vertical" android:padding="16dp">
         <LinearLayout android:layout_width="match_parent" android:layout_height="40dp" android:orientation="horizontal">
             <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="3"
-                android:text="@string/seller_table_title" android:textColor="@color/black" android:gravity="center_vertical" />
-            <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/black" />
+                android:text="@string/seller_table_title" android:textColor="?attr/colorOnSurface" android:gravity="center_vertical" />
+            <View android:layout_width="1dp" android:layout_height="match_parent" android:background="?attr/colorOutlineVariant" />
             <TextView android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
-                android:text="@string/seller_requests" android:textColor="@color/black" android:gravity="center" android:textSize="12sp" />
+                android:text="@string/seller_requests" android:textColor="?attr/colorOnSurface" android:gravity="center" android:textSize="12sp" />
         </LinearLayout>
         <ProgressBar android:id="@+id/seller_progress" android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" android:layout_margin="16dp" />

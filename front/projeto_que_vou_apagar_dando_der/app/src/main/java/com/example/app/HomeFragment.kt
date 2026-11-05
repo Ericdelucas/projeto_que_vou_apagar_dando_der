@@ -22,6 +22,19 @@ class HomeFragment : Fragment() {
     private var feedCall: Call<List<PostResponse>>? = null
     private var feedAdapter: FeedAdapter? = null
     private lateinit var favorites: FavoritesViewModel
+    private var posts = emptyList<PostResponse>()
+    private var modelFilter: String? = null
+    private var categoryFilter: String? = null
+    private var tagFilter: String? = null
+    private var query = ""
+
+    override fun onCreate(state: Bundle?) {
+        super.onCreate(state)
+        modelFilter = state?.getString("model")
+        categoryFilter = state?.getString("category")
+        tagFilter = state?.getString("tag")
+        query = state?.getString("query").orEmpty()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, state: Bundle?): View =
         FragmentHomeBinding.inflate(inflater, container, false).also { binding = it }.root
@@ -37,6 +50,15 @@ class HomeFragment : Fragment() {
         favorites = observeFavorites { feedAdapter?.updateFavorites(it) }
         ui.feedList.layoutManager = LinearLayoutManager(requireContext())
         ui.feedList.adapter = feedAdapter
+        ui.feedSearch.setText(query)
+        ui.feedSearch.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { query = s.toString(); renderPosts() }
+            override fun afterTextChanged(s: android.text.Editable?) = Unit
+        })
+        ui.modelFilter.setOnClickListener { choose(it, posts.mapNotNull { post -> post.product?.model }, modelFilter) { modelFilter = it; renderPosts() } }
+        ui.categoryFilter.setOnClickListener { choose(it, posts.mapNotNull { post -> post.product?.category }, categoryFilter) { categoryFilter = it; renderPosts() } }
+        ui.tagFilter.setOnClickListener { choose(it, posts.mapNotNull { post -> post.product?.title }, tagFilter) { tagFilter = it; renderPosts() } }
         ui.retryButton.setOnClickListener { loadFeed() }
         ui.btnNotifications.setOnClickListener { findNavController().navigate(R.id.nav_users) }
         ui.btnChatHome.setOnClickListener { findNavController().navigate(R.id.nav_users) }
@@ -64,8 +86,8 @@ class HomeFragment : Fragment() {
                     showMessage(R.string.feed_error, true)
                     return
                 }
-                feedAdapter?.submitList(posts)
-                if (posts.isEmpty()) showMessage(R.string.feed_empty, false)
+                this@HomeFragment.posts = posts
+                renderPosts()
             }
 
             override fun onFailure(call: Call<List<PostResponse>>, error: Throwable) {
@@ -74,6 +96,34 @@ class HomeFragment : Fragment() {
                 if (!call.isCanceled) showMessage(R.string.feed_error, true)
             }
         })
+    }
+
+    private fun choose(anchor: View, values: List<String>, selected: String?, apply: (String?) -> Unit) {
+        val choices = listOf<String?>(null) + values.distinct().sorted()
+        androidx.appcompat.widget.PopupMenu(requireContext(), anchor).apply {
+            choices.forEachIndexed { index, value -> menu.add(0, index, index, value ?: getString(R.string.marketplace_all)).apply { isCheckable = true; isChecked = value == selected } }
+            menu.setGroupCheckable(0, true, true)
+            setOnMenuItemClickListener { apply(choices[it.itemId]); true }
+            show()
+        }
+    }
+
+    private fun renderPosts() {
+        val ui = binding ?: return
+        val visible = com.example.app.feed.FeedFilters.apply(posts, modelFilter, categoryFilter, tagFilter, query)
+        ui.modelFilter.text = modelFilter ?: getString(R.string.filter_model)
+        ui.categoryFilter.text = categoryFilter ?: getString(R.string.filter_category)
+        ui.tagFilter.text = tagFilter ?: getString(R.string.filter_piece)
+        feedAdapter?.submitList(visible)
+        ui.feedMessage.visibility = if (visible.isEmpty() && feedCall == null) View.VISIBLE else View.GONE
+        ui.feedMessage.setText(if (posts.isEmpty()) R.string.feed_empty else R.string.marketplace_empty)
+        ui.retryButton.visibility = View.GONE
+    }
+
+    override fun onSaveInstanceState(out: Bundle) {
+        super.onSaveInstanceState(out)
+        out.putString("model", modelFilter); out.putString("category", categoryFilter)
+        out.putString("tag", tagFilter); out.putString("query", query)
     }
 
     private fun showMessage(message: Int, retry: Boolean) {

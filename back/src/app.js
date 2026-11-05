@@ -12,6 +12,8 @@ import settingsRoutes from './routes/settingsRoutes.js';
 import { health } from './controllers/healthController.js';
 
 const app = express();
+// Render termina TLS no proxy imediatamente à frente do Express.
+if (process.env.RENDER === 'true') app.set('trust proxy', 1);
 app.use(cors());
 app.use(express.json());
 app.use('/demo', express.static(fileURLToPath(new URL('../public/demo/', import.meta.url))));

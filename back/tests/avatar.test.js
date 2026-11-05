@@ -1,0 +1,41 @@
+import assert from 'node:assert/strict';
+import { once } from 'node:events';
+import { readFile, unlink } from 'node:fs/promises';
+import { test } from 'node:test';
+
+process.env.DB_MODE = 'memory';
+const { default: app } = await import('../src/app.js');
+const { default: pool } = await import('../src/config/db.js');
+
+test('foto de perfil: autenticação, formato, isolamento e mídia HTTPS na Render', async t => {
+  await pool.initialize();
+  const server = app.listen(0, '127.0.0.1'); await once(server, 'listening');
+  t.after(async () => { await new Promise(resolve => server.close(resolve)); await pool.end(); });
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const login = async email => (await fetch(base + '/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password: 'SkipPecas123!' }) })).json();
+  const buyer = await login('comprador@skippecas.local');
+  const seller = await login('vendedor@skippecas.local');
+  const bytes = await readFile(new URL('../public/demo/peca.png', import.meta.url));
+  const upload = (body, token, type = 'image/png') => fetch(base + '/api/users/avatar', { method: 'POST', headers: { 'Content-Type': type, ...(token ? { Authorization: `Bearer ${token}` } : {}) }, body });
+  assert.equal((await upload(bytes)).status, 401);
+  assert.equal((await upload(Buffer.from('arquivo inválido de teste'), buyer.token)).status, 400);
+  assert.equal((await upload(bytes, buyer.token, 'image/jpeg')).status, 400);
+  assert.equal((await upload(Buffer.alloc(8 * 1024 * 1024 + 1), buyer.token)).status, 413);
+  const response = await upload(bytes, buyer.token);
+  assert.equal(response.status, 200);
+  const own = await response.json();
+  assert.equal(own.id, buyer.user.id); assert.equal(own.is_owner, true);
+  const filename = new URL(own.avatar_url).pathname.split('/').at(-1);
+  t.after(() => unlink(new URL('../uploads/' + filename, import.meta.url)));
+  const image = await fetch(own.avatar_url); assert.equal(image.status, 200);
+  assert.deepEqual(Buffer.from(await image.arrayBuffer()), bytes);
+  const other = await (await fetch(base + '/api/users/me', { headers: { Authorization: `Bearer ${seller.token}` } })).json();
+  assert.notEqual(other.avatar_url, own.avatar_url);
+  const old = process.env.RENDER_EXTERNAL_URL;
+  t.after(() => { if (old === undefined) delete process.env.RENDER_EXTERNAL_URL; else process.env.RENDER_EXTERNAL_URL = old; });
+  process.env.RENDER_EXTERNAL_URL = 'https://skippecas-api.onrender.com';
+  const profile = await (await fetch(base + '/api/users/me', { headers: { Authorization: `Bearer ${buyer.token}` } })).json();
+  assert.equal(profile.avatar_url, 'https://skippecas-api.onrender.com/uploads/' + filename);
+  const feed = await (await fetch(base + '/api/feed')).json();
+  assert.ok(feed.some(post => (post.image_url || post.product?.image_url)?.startsWith('https://skippecas-api.onrender.com/')));
+});

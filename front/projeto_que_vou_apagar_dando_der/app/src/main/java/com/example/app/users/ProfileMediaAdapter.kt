@@ -23,7 +23,7 @@ class ProfileMediaAdapter(private val onClick: (ProfileMedia) -> Unit) :
         holder.ui.apply {
             mediaTitle.text = media.title
             mediaImage.contentDescription = media.title
-            Glide.with(root).load(media.imageUrl).placeholder(R.drawable.ic_steering_wheel)
+            Glide.with(root).load(com.example.app.network.MediaUrl.resolve(media.imageUrl)).placeholder(R.drawable.ic_steering_wheel)
                 .error(R.drawable.ic_steering_wheel).into(mediaImage)
             playIcon.visibility = if (media.videoUrl.isNullOrBlank()) View.GONE else View.VISIBLE
             root.setOnClickListener { onClick(media) }

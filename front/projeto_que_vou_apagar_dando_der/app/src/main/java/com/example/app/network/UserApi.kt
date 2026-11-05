@@ -33,6 +33,9 @@ data class UserProfile(
 data class UpdateProfileRequest(val name: String, val email: String, val avatar_url: String, val bio: String)
 
 interface UserApi {
+    @POST("users/avatar")
+    fun uploadAvatar(@Header("Authorization") auth: String, @Body photo: okhttp3.RequestBody): Call<UserProfile>
+
     @GET("users/search")
     fun search(@Header("Authorization") auth: String, @Query("q") query: String,
                @Query("filter") filter: String? = null): Call<List<UserSearchItem>>

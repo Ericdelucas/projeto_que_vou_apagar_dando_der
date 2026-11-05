@@ -1,5 +1,7 @@
 # SkipPeças — relatório de pré-deploy e guia Render
 
+**Atualização de interface 1.2:** filtros, tema escuro e mídia HTTPS corrigidos. A troca de foto da galeria depende de publicar a nova rota de backend; veja [passos exatos](docs/CORRECOES_INTERFACE.md). As instruções da versão 1.1 abaixo são históricas.
+
 ## Atualização: APK conectado automaticamente à Render
 
 O serviço foi verificado em `https://skippecas-api.onrender.com/health`: HTTP 200, todos os módulos saudáveis, banco SQLite em memória (`DB_MODE=memory`, `volatile=true`). O APK versão 1.1 (versionCode 2) agora inclui `https://skippecas-api.onrender.com/api/` como URL padrão. O botão de configuração manual foi removido; preferências antigas de endereço são descartadas na atualização. Instale o APK novo sobre o antigo.

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="850" height="1105" viewBox="0 0 850 1105" role="img" aria-label="fragment_vender">
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="1275" viewBox="0 0 850 1275" role="img" aria-label="fragment_vender">
 <rect width="100%" height="100%" fill="#f5f7fa"/>
 <text x="30" y="38" font-family="sans-serif" font-size="24" fill="#12263a">fragment_vender</text>
 <rect x="45" y="65" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
@@ -17,23 +17,29 @@
 <text x="65" y="441" font-family="sans-serif" font-size="18">RecyclerView: sellers_list</text>
 <path d="M425 465 V490" stroke="#506579" stroke-width="2"/><path d="M420 482 L425 490 L430 482" fill="none" stroke="#506579"/>
 <rect x="45" y="490" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
-<text x="65" y="526" font-family="sans-serif" font-size="18">TextView: model_label</text>
+<text x="65" y="526" font-family="sans-serif" font-size="18">HorizontalScrollView: product_filters</text>
 <path d="M425 550 V575" stroke="#506579" stroke-width="2"/><path d="M420 567 L425 575 L430 567" fill="none" stroke="#506579"/>
 <rect x="45" y="575" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
-<text x="65" y="611" font-family="sans-serif" font-size="18">TextView: category_label</text>
+<text x="65" y="611" font-family="sans-serif" font-size="18">MaterialButton: model_filter</text>
 <path d="M425 635 V660" stroke="#506579" stroke-width="2"/><path d="M420 652 L425 660 L430 652" fill="none" stroke="#506579"/>
 <rect x="45" y="660" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
-<text x="65" y="696" font-family="sans-serif" font-size="18">ImageView: btn_chat_vender</text>
+<text x="65" y="696" font-family="sans-serif" font-size="18">MaterialButton: category_filter</text>
 <path d="M425 720 V745" stroke="#506579" stroke-width="2"/><path d="M420 737 L425 745 L430 737" fill="none" stroke="#506579"/>
 <rect x="45" y="745" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
-<text x="65" y="781" font-family="sans-serif" font-size="18">ProgressBar: seller_progress</text>
+<text x="65" y="781" font-family="sans-serif" font-size="18">MaterialButton: piece_filter</text>
 <path d="M425 805 V830" stroke="#506579" stroke-width="2"/><path d="M420 822 L425 830 L430 822" fill="none" stroke="#506579"/>
 <rect x="45" y="830" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
-<text x="65" y="866" font-family="sans-serif" font-size="18">TextView: seller_message</text>
+<text x="65" y="866" font-family="sans-serif" font-size="18">ImageButton: btn_chat_vender</text>
 <path d="M425 890 V915" stroke="#506579" stroke-width="2"/><path d="M420 907 L425 915 L430 907" fill="none" stroke="#506579"/>
 <rect x="45" y="915" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
-<text x="65" y="951" font-family="sans-serif" font-size="18">MaterialButton: retry_button</text>
+<text x="65" y="951" font-family="sans-serif" font-size="18">ProgressBar: seller_progress</text>
 <path d="M425 975 V1000" stroke="#506579" stroke-width="2"/><path d="M420 992 L425 1000 L430 992" fill="none" stroke="#506579"/>
 <rect x="45" y="1000" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
-<text x="65" y="1036" font-family="sans-serif" font-size="18">RecyclerView: products_list</text>
+<text x="65" y="1036" font-family="sans-serif" font-size="18">TextView: seller_message</text>
+<path d="M425 1060 V1085" stroke="#506579" stroke-width="2"/><path d="M420 1077 L425 1085 L430 1077" fill="none" stroke="#506579"/>
+<rect x="45" y="1085" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="1121" font-family="sans-serif" font-size="18">MaterialButton: retry_button</text>
+<path d="M425 1145 V1170" stroke="#506579" stroke-width="2"/><path d="M420 1162 L425 1170 L430 1162" fill="none" stroke="#506579"/>
+<rect x="45" y="1170" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="1206" font-family="sans-serif" font-size="18">RecyclerView: products_list</text>
 </svg>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorSurface">
 
     <!-- Top Red Header -->
     <LinearLayout
@@ -26,12 +26,13 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp">
 
-            <TextView
+            <EditText android:id="@+id/feed_search" android:inputType="text" android:imeOptions="actionSearch" android:autofillHints="" android:background="@android:color/transparent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Pesquisar peças, customizações..."
-                android:textColor="#E0E0E0"
+                android:hint="@string/feed_search_hint"
+                android:textColor="@color/white"
+                    android:textColorHint="#EEEEEE"
                 android:textSize="13sp"
                 android:ellipsize="end"
                 android:maxLines="1" />
@@ -54,114 +55,18 @@
             android:contentDescription="Notifications" />
     </LinearLayout>
 
-    <!-- Filter Chips Row -->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:padding="8dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_red_pill"
-                android:paddingStart="12dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginEnd="6dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tipage: Modelo"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_arrow_down"
-                    app:tint="@color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_red_pill"
-                android:paddingStart="12dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginEnd="6dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Categoria: Ano"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_arrow_down"
-                    app:tint="@color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_red_pill"
-                android:paddingStart="12dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginEnd="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tags: Volante"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_arrow_down"
-                    app:tint="@color/white" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/btn_chat_home"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_chat"
-                app:tint="@color/black"
-                android:contentDescription="Chat" />
+    <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:scrollbars="none">
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingHorizontal="12dp">
+            <com.google.android.material.button.MaterialButton android:id="@+id/model_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/filter_model" app:cornerRadius="24dp" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/category_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="@string/filter_category" app:cornerRadius="24dp" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/tag_filter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="@string/filter_piece" app:cornerRadius="24dp" />
+            <ImageButton android:id="@+id/btn_chat_home" android:layout_width="48dp" android:layout_height="48dp" android:src="@drawable/ic_chat" android:background="?attr/selectableItemBackgroundBorderless" app:tint="?attr/colorOnSurface" android:contentDescription="@string/title_usuarios" />
         </LinearLayout>
     </HorizontalScrollView>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_border" />
+        android:background="?attr/colorOutlineVariant" />
 
     <ProgressBar
         android:id="@+id/feed_progress"

@@ -11,7 +11,7 @@
         android:id="@+id/author_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -20,14 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/text_dark" />
+        android:textColor="?attr/colorOnSurface" />
 
     <ImageView
         android:id="@+id/post_image"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_marginTop="12dp"
-        android:background="@color/gray_bg"
+        android:background="?attr/colorSurfaceContainer"
         android:scaleType="fitCenter" />
 
     <VideoView
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:textColor="@color/gray_text" />
+        android:textColor="?attr/colorOnSurfaceVariant" />
 
     <LinearLayout
         android:id="@+id/product_tag"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="16sp" />
 
         <TextView

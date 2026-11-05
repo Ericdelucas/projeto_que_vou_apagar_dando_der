@@ -26,7 +26,7 @@ class UsersAdapter(private val onClick: (Int) -> Unit) :
             userActivity.text = root.context.getString(R.string.users_activity_total, user.activityCount)
             activityChart.contentDescription = root.context.getString(R.string.users_activity_description,
                 user.activityCount, user.activity.orEmpty().joinToString(", "))
-            Glide.with(root).load(user.avatarUrl).circleCrop().placeholder(R.drawable.ic_person)
+            Glide.with(root).load(com.example.app.network.MediaUrl.resolve(user.avatarUrl)).circleCrop().placeholder(R.drawable.ic_person)
                 .error(R.drawable.ic_person).into(userAvatar)
             root.setOnClickListener { onClick(user.id) }
         }

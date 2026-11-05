@@ -78,7 +78,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_border" />
+            android:background="?attr/colorOutlineVariant" />
 
         <!-- Item 2: Bloqueados -->
         <LinearLayout
@@ -118,7 +118,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_border" />
+            android:background="?attr/colorOutlineVariant" />
 
         <!-- Item 3: Loja -->
         <LinearLayout
@@ -158,7 +158,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_border" />
+            android:background="?attr/colorOutlineVariant" />
 
         <!-- Item 4: Temas -->
         <LinearLayout

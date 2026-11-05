@@ -39,7 +39,7 @@ class FavoritesAdapter(
             authorName.text = root.context.getString(R.string.favorites_author,
                 favorite.author.name ?: root.context.getString(R.string.feed_unknown_author))
             productImage.contentDescription = product.title
-            Glide.with(root).load(product.imageUrl)
+            Glide.with(root).load(com.example.app.network.MediaUrl.resolve(product.imageUrl))
                 .placeholder(R.drawable.ic_steering_wheel)
                 .error(R.drawable.ic_steering_wheel).into(productImage)
             favoriteButton.bindFavorite(product.id, state, onFavoriteClick)

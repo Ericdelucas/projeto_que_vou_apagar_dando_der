@@ -1,0 +1,19 @@
+{
+  "tests": 32,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "backend": {
+    "tests": 20,
+    "failures": 0
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 140
+  },
+  "apk": {
+    "version": "1.2",
+    "versionCode": 3,
+    "sha256": "ad561524ca3fb154fd13cc562aa3852b023fbcef347ed34156029ec7568d8042"
+  }
+}

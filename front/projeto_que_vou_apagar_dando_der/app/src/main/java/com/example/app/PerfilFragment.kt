@@ -88,7 +88,7 @@ class PerfilFragment : Fragment() {
         ui.followingCount.text = getString(R.string.profile_following, user.followingCount)
         ui.editProfile.visibility = if (user.isOwner) View.VISIBLE else View.GONE
         ui.editProfile.isEnabled = !state.loading && !state.saving
-        Glide.with(this).load(user.avatarUrl).circleCrop().placeholder(R.drawable.ic_person)
+        Glide.with(this).load(com.example.app.network.MediaUrl.resolve(user.avatarUrl)).circleCrop().placeholder(R.drawable.ic_person)
             .error(R.drawable.ic_person).into(ui.userAvatar)
         mediaAdapter?.submitList(user.media)
         ui.mediaEmpty.visibility = if (user.media.isEmpty()) View.VISIBLE else View.GONE

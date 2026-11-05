@@ -19,7 +19,7 @@ class ProfileMediaDialogFragment : DialogFragment() {
         val video = arguments?.getString("video")
         ui.mediaImage.visibility = if (video.isNullOrBlank()) View.VISIBLE else View.GONE
         ui.mediaVideo.visibility = if (video.isNullOrBlank()) View.GONE else View.VISIBLE
-        if (video.isNullOrBlank()) Glide.with(this).load(arguments?.getString("image"))
+        if (video.isNullOrBlank()) Glide.with(this).load(com.example.app.network.MediaUrl.resolve(arguments?.getString("image")))
             .placeholder(R.drawable.ic_steering_wheel).into(ui.mediaImage)
         return MaterialAlertDialogBuilder(requireContext()).setTitle(arguments?.getString("title"))
             .setView(ui.root).setPositiveButton(android.R.string.ok, null).create()

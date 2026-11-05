@@ -28,7 +28,7 @@ class BlockedUsersAdapter(private val onUnblock: (BlockedUser) -> Unit) :
             blockedName.text = item.user.name?.takeIf { it.isNotBlank() }
                 ?: root.context.getString(R.string.settings_unnamed_user)
             blockedRole.setText(if (item.user.role == "vendedor") R.string.users_seller else R.string.users_buyer)
-            Glide.with(root).load(item.user.avatarUrl).circleCrop()
+            Glide.with(root).load(com.example.app.network.MediaUrl.resolve(item.user.avatarUrl)).circleCrop()
                 .placeholder(R.drawable.ic_person).error(R.drawable.ic_person).into(blockedAvatar)
             unblockButton.isEnabled = !busy
             unblockButton.setOnClickListener { onUnblock(item) }

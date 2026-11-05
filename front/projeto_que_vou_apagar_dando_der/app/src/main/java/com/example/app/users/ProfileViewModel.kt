@@ -19,6 +19,8 @@ data class ProfileState(
 )
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
+    private val photoWorker = java.util.concurrent.Executors.newSingleThreadExecutor()
+    @Volatile private var cleared = false
     private val tokens = TokenStore(application)
     private var request: Call<UserProfile>? = null
     private var update: Call<UserProfile>? = null
@@ -67,7 +69,8 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     fun clearSaveError() { mutableState.value = current.copy(saveError = null) }
 
-    fun save(body: UpdateProfileRequest) {
+    fun save(body: UpdateProfileRequest, photo: android.net.Uri? = null) {
+        if (photo != null) { uploadPhoto(body, photo); return }
         if (current.saving || current.profile?.isOwner != true) return
         val token = tokens.getToken()
         if (token.isNullOrBlank() || token != session) { expire(); return }
@@ -103,6 +106,45 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         })
     }
 
+    private fun uploadPhoto(body: UpdateProfileRequest, photo: android.net.Uri) {
+        if (current.saving || current.profile?.isOwner != true) return
+        val token = tokens.getToken()
+        if (token.isNullOrBlank() || token != session) { expire(); return }
+        val loading = request; request = null; loading?.cancel()
+        mutableState.value = current.copy(saving = true, loading = false, saveError = null)
+        photoWorker.execute {
+            try {
+                val bytes = PhotoEncoder.encode(getApplication(), photo)
+                if (cleared) return@execute
+                val call = ApiClient.users.uploadAvatar("Bearer $token", okhttp3.RequestBody.create(okhttp3.MediaType.parse("image/jpeg"), bytes))
+                update = call
+                if (cleared) { call.cancel(); return@execute }
+                call.enqueue(object : Callback<UserProfile> {
+                    override fun onResponse(call: Call<UserProfile>, response: Response<UserProfile>) {
+                        if (update !== call || cleared) return
+                        update = null
+                        val user = response.body()
+                        if (response.isSuccessful && user != null) {
+                            mutableState.value = current.copy(profile = user, saving = false)
+                            save(body.copy(avatar_url = user.avatarUrl.orEmpty()))
+                        } else {
+                            response.errorBody()?.close()
+                            if (response.code() == 401) expire()
+                            else mutableState.value = current.copy(saving = false, saveError = R.string.profile_save_error)
+                        }
+                    }
+                    override fun onFailure(call: Call<UserProfile>, error: Throwable) {
+                        if (update !== call || cleared) return
+                        update = null
+                        if (!call.isCanceled) mutableState.value = current.copy(saving = false, saveError = R.string.profile_save_error)
+                    }
+                })
+            } catch (_: Exception) {
+                if (!cleared) mutableState.postValue(current.copy(saving = false, saveError = R.string.post_photo_read_error))
+            }
+        }
+    }
+
     private fun expire() {
         if (tokens.getToken() == session) tokens.clear()
         cancelRequests()
@@ -114,5 +156,5 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         request = null; update = null
         first?.cancel(); second?.cancel()
     }
-    override fun onCleared() { cancelRequests(); super.onCleared() }
+    override fun onCleared() { cleared = true; photoWorker.shutdownNow(); cancelRequests(); super.onCleared() }
 }

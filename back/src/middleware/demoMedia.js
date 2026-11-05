@@ -6,7 +6,7 @@ export function demoMedia(req, res, next) {
   const json = res.json.bind(res);
   res.json = body => {
     const demo = getDatabaseStatus().engine === 'sqlite-memory';
-    const base = `${req.protocol}://${req.get('host')}`;
+    const base = process.env.RENDER_EXTERNAL_URL?.replace(/\/$/, '') || `${req.protocol}://${req.get('host')}`;
     function rewrite(value) {
       if (Array.isArray(value)) return value.map(rewrite);
       if (value && typeof value === 'object') {

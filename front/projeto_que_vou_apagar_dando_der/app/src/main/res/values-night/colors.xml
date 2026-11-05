@@ -1,0 +1,6 @@
+<resources>
+    <color name="gray_bg">#121212</color><color name="gray_light">#242424</color>
+    <color name="gray_border">#484848</color><color name="gray_text">#CACACA</color>
+    <color name="text_dark">#F3F3F3</color><color name="red_light">#402024</color>
+    <color name="red_pink">#4B2529</color>
+</resources>

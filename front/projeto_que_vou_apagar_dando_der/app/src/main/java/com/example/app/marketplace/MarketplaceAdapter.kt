@@ -48,7 +48,7 @@ class MarketplaceAdapter(
             ui.productTitle.text = product.title
             ui.productPrice.text = formatPrice(product.price)
             ui.productImage.contentDescription = product.title
-            Glide.with(ui.root).load(product.imageUrl)
+            Glide.with(ui.root).load(com.example.app.network.MediaUrl.resolve(product.imageUrl))
                 .placeholder(R.drawable.ic_steering_wheel)
                 .error(R.drawable.ic_steering_wheel).into(ui.productImage)
         }

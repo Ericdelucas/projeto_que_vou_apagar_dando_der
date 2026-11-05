@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto';
+import { mkdir, writeFile, unlink } from 'node:fs/promises';
 import { getUserProfile, searchUsers, updateUserProfile } from '../models/userProfileModel.js';
 
 export async function search(req, res) {
@@ -77,5 +79,34 @@ export async function updateProfile(req, res) {
     if (error.code === 'ER_DUP_ENTRY') return res.status(409).json({ message: 'E-mail já cadastrado.' });
     console.error('Falha ao atualizar perfil:', error.code || error.name);
     return res.status(500).json({ message: 'Não foi possível atualizar o perfil.' });
+  }
+}
+
+export async function uploadAvatar(req, res) {
+  const data = req.body;
+  if (!Buffer.isBuffer(data) || data.length < 12) return res.status(400).json({ message: 'Selecione uma foto válida.' });
+  let extension;
+  if (data[0] === 0xff && data[1] === 0xd8 && data[2] === 0xff) extension = 'jpg';
+  else if (data.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10]))) extension = 'png';
+  else if (data.toString('ascii', 0, 4) === 'RIFF' && data.toString('ascii', 8, 12) === 'WEBP') extension = 'webp';
+  if (!extension || req.get('Content-Type')?.split(';')[0] !== `image/${extension === 'jpg' ? 'jpeg' : extension}`)
+    return res.status(400).json({ message: 'Envie JPEG, PNG ou WebP.' });
+  const directory = new URL('../../uploads/', import.meta.url);
+  const name = `${randomUUID()}.${extension}`;
+  const file = new URL(name, directory);
+  let persisted = false;
+  try {
+    await mkdir(directory, { recursive: true });
+    await writeFile(file, data, { flag: 'wx' });
+    if (!(await updateUserProfile(req.auth.userId, { avatar_url: `/uploads/${name}` }))) {
+      await unlink(file);
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+    persisted = true;
+    return res.json(await getUserProfile(req.auth.userId, req.auth.userId));
+  } catch (error) {
+    if (!persisted) await unlink(file).catch(() => {});
+    console.error('Falha ao atualizar foto:', error.code || error.name);
+    return res.status(500).json({ message: 'Não foi possível salvar a foto.' });
   }
 }
