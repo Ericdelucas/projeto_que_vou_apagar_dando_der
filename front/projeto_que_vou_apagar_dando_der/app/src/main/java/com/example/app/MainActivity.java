@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         com.example.app.settings.ThemeSettings.apply(this);
         super.onCreate(savedInstanceState);
+        com.example.app.network.ApiClient.INSTANCE.initialize(this);
         EdgeToEdge.enable(this);
 
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());

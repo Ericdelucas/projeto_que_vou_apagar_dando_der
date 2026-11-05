@@ -183,4 +183,18 @@
     <string name="seller_directory">Vendedores</string>
     <string name="seller_directory_all">Ver todos os vendedores</string>
     <string name="seller_directory_retry">Não foi possível carregar vendedores. Toque para tentar novamente.</string>
+    <string name="login_brand_description">Encontre a peça certa. Compartilhe seu projeto.</string>
+    <string name="login_welcome">Bem-vindo de volta</string>
+    <string name="login_description">Entre para acompanhar a comunidade e salvar suas peças favoritas.</string>
+    <string name="register_heading">Seu projeto começa aqui</string>
+    <string name="register_description">Crie sua conta para descobrir, compartilhar e anunciar peças.</string>
+    <string name="connection_configure">Configurar conexão</string>
+    <string name="connection_title">Conexão de testes</string>
+    <string name="connection_help">Use a URL HTTPS da sua API na Render. A conexão local exige computador com backend ligado e redirecionamento USB.</string>
+    <string name="connection_url">Endereço da API</string>
+    <string name="connection_invalid">Informe uma URL HTTPS válida, sem credenciais ou parâmetros. Exemplo: https://seu-servico.onrender.com</string>
+    <string name="connection_save">Salvar conexão</string>
+    <string name="connection_saved">Conexão salva. Tente entrar novamente.</string>
+    <string name="connection_local_error">Este APK está configurado para conexão local. Para usar pela internet, configure o endereço HTTPS da API publicada na Render.</string>
+    <string name="connection_remote_error">Não foi possível alcançar a API. Verifique sua internet e se o serviço na Render está disponível. Se estiver iniciando, aguarde e tente novamente.</string>
 </resources>
