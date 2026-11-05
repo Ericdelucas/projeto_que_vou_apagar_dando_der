@@ -1,0 +1,5 @@
+flowchart LR
+ U[Usuário] -->|credenciais e ações| P((0. SkipPeças))
+ P -->|listas / erros / sessão| U
+ P -->|consultas e escritas| D[(Dados persistentes)]
+ D -->|registros| P

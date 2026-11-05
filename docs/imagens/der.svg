@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="680" viewBox="0 0 850 680" role="img" aria-label="Entidades e relações — visão resumida">
+<rect width="100%" height="100%" fill="#f5f7fa"/>
+<text x="30" y="38" font-family="sans-serif" font-size="24" fill="#12263a">Entidades e relações — visão resumida</text>
+<rect x="45" y="65" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="101" font-family="sans-serif" font-size="18">users</text>
+<path d="M425 125 V150" stroke="#506579" stroke-width="2"/><path d="M420 142 L425 150 L430 142" fill="none" stroke="#506579"/>
+<rect x="45" y="150" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="186" font-family="sans-serif" font-size="18">products</text>
+<path d="M425 210 V235" stroke="#506579" stroke-width="2"/><path d="M420 227 L425 235 L430 227" fill="none" stroke="#506579"/>
+<rect x="45" y="235" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="271" font-family="sans-serif" font-size="18">posts</text>
+<path d="M425 295 V320" stroke="#506579" stroke-width="2"/><path d="M420 312 L425 320 L430 312" fill="none" stroke="#506579"/>
+<rect x="45" y="320" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="356" font-family="sans-serif" font-size="18">favorites</text>
+<path d="M425 380 V405" stroke="#506579" stroke-width="2"/><path d="M420 397 L425 405 L430 397" fill="none" stroke="#506579"/>
+<rect x="45" y="405" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="441" font-family="sans-serif" font-size="18">product_requests</text>
+<path d="M425 465 V490" stroke="#506579" stroke-width="2"/><path d="M420 482 L425 490 L430 482" fill="none" stroke="#506579"/>
+<rect x="45" y="490" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="526" font-family="sans-serif" font-size="18">user_follows</text>
+<path d="M425 550 V575" stroke="#506579" stroke-width="2"/><path d="M420 567 L425 575 L430 567" fill="none" stroke="#506579"/>
+<rect x="45" y="575" width="760" height="60" rx="8" fill="white" stroke="#a22b35"/>
+<text x="65" y="611" font-family="sans-serif" font-size="18">blocked_users</text>
+</svg>

@@ -1,0 +1,10 @@
+flowchart LR
+ Auth[Autenticação] --> Sessao[Sessão JWT]
+ Sessao --> Anuncios[Anúncios]
+ Sessao --> Favoritos
+ Sessao --> Perfis
+ Sessao --> Bloqueios
+ Anuncios --> Marketplace
+ Anuncios --> Feed
+ Perfis --> Publicacoes[Publicações]
+ Publicacoes --> Feed

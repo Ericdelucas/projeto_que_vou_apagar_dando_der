@@ -27,8 +27,12 @@ app.use('/api/seller', sellerRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/settings', settingsRoutes);
 app.get('/health', health);
+app.use((req, res) => res.status(404).json({ message: 'Rota não encontrada.' }));
 app.use((error, req, res, next) => {
-  if (error.type === 'entity.too.large') return res.status(413).json({ message: 'A foto deve ter no máximo 8 MB.' });
-  return next(error);
+  if (res.headersSent) return next(error);
+  if (error.type === 'entity.too.large') return res.status(413).json({ message: 'O conteúdo enviado excede o limite permitido.' });
+  if (error.type === 'entity.parse.failed') return res.status(400).json({ message: 'JSON inválido.' });
+  console.error('Falha não tratada na API:', error.code || error.name);
+  return res.status(500).json({ message: 'Não foi possível processar a solicitação.' });
 });
 export default app;

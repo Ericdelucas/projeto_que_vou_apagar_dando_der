@@ -13,6 +13,7 @@ front/projeto_que_vou_apagar_dando_der/local.properties
 **/build/
 **/.cxx/
 **/.externalNativeBuild/
+**/.kotlin/
 *.apk
 *.aab
 *.jks

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="SkipPecasDefinitions" targetNamespace="https://skippecas.example/modelagem">
+  <bpmn:process id="PublicarAnuncio" name="Publicar anúncio" isExecutable="false">
+    <bpmn:laneSet id="Lanes">
+      <bpmn:lane id="Usuario" name="Usuário">
+        <bpmn:flowNodeRef>Inicio</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Preencher</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="API" name="API SkipPeças">
+        <bpmn:flowNodeRef>Validar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Valido</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Persistir</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Rejeitar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Sucesso</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Erro</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Inicio" name="Início">
+      <bpmn:outgoing>f1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Preencher" name="Preencher anúncio">
+      <bpmn:incoming>f1</bpmn:incoming>
+      <bpmn:outgoing>f2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Validar" name="Validar sessão, papel e dados">
+      <bpmn:incoming>f2</bpmn:incoming>
+      <bpmn:outgoing>f3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Valido" name="Válido?">
+      <bpmn:incoming>f3</bpmn:incoming>
+      <bpmn:outgoing>f4</bpmn:outgoing>
+      <bpmn:outgoing>f5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Persistir" name="Persistir anúncio">
+      <bpmn:incoming>f4</bpmn:incoming>
+      <bpmn:outgoing>f6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Rejeitar" name="Responder erro">
+      <bpmn:incoming>f5</bpmn:incoming>
+      <bpmn:outgoing>f7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Sucesso" name="201 criado">
+      <bpmn:incoming>f6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Erro" name="400/401/403">
+      <bpmn:incoming>f7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="f1" sourceRef="Inicio" targetRef="Preencher" />
+    <bpmn:sequenceFlow id="f2" sourceRef="Preencher" targetRef="Validar" />
+    <bpmn:sequenceFlow id="f3" sourceRef="Validar" targetRef="Valido" />
+    <bpmn:sequenceFlow id="f4" sourceRef="Valido" targetRef="Persistir" name="válido">
+      <bpmn:conditionExpression>válido</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f5" sourceRef="Valido" targetRef="Rejeitar" name="inválido">
+      <bpmn:conditionExpression>inválido</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="f6" sourceRef="Persistir" targetRef="Sucesso" />
+    <bpmn:sequenceFlow id="f7" sourceRef="Rejeitar" targetRef="Erro" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="PublicarAnuncio">
+      <bpmndi:BPMNShape id="Usuario_di" bpmnElement="Usuario" isHorizontal="true">
+        <dc:Bounds x="30" y="40" width="950" height="190" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="API_di" bpmnElement="API" isHorizontal="true">
+        <dc:Bounds x="30" y="230" width="950" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Inicio_di" bpmnElement="Inicio">
+        <dc:Bounds x="90" y="105" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Preencher_di" bpmnElement="Preencher">
+        <dc:Bounds x="180" y="85" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Validar_di" bpmnElement="Validar">
+        <dc:Bounds x="360" y="275" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Valido_di" bpmnElement="Valido">
+        <dc:Bounds x="570" y="290" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Persistir_di" bpmnElement="Persistir">
+        <dc:Bounds x="690" y="255" width="140" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Rejeitar_di" bpmnElement="Rejeitar">
+        <dc:Bounds x="690" y="355" width="140" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Sucesso_di" bpmnElement="Sucesso">
+        <dc:Bounds x="900" y="270" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Erro_di" bpmnElement="Erro">
+        <dc:Bounds x="900" y="370" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="f1_di" bpmnElement="f1">
+        <di:waypoint x="126" y="123.0" />
+        <di:waypoint x="180" y="125.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f2_di" bpmnElement="f2">
+        <di:waypoint x="320" y="125.0" />
+        <di:waypoint x="360" y="315.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f3_di" bpmnElement="f3">
+        <di:waypoint x="520" y="315.0" />
+        <di:waypoint x="570" y="315.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f4_di" bpmnElement="f4">
+        <di:waypoint x="620" y="315.0" />
+        <di:waypoint x="690" y="290.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f5_di" bpmnElement="f5">
+        <di:waypoint x="620" y="315.0" />
+        <di:waypoint x="690" y="390.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f6_di" bpmnElement="f6">
+        <di:waypoint x="830" y="290.0" />
+        <di:waypoint x="900" y="288.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="f7_di" bpmnElement="f7">
+        <di:waypoint x="830" y="390.0" />
+        <di:waypoint x="900" y="388.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

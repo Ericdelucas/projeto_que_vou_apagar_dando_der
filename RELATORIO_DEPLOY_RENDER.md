@@ -85,3 +85,7 @@ Para uma instância destinada explicitamente a demonstração, altere `DB_MODE` 
 **Pendente antes de liberar produção:** E2E com MySQL disponível, schema aplicado, eventual TLS conforme o provedor, armazenamento persistente de fotos, deploy na conta Render e validação pública/Android. A execução local aprovada não comprova essas etapas externas.
 
 O commit reúne a infraestrutura, o teste integrado e este relatório. O push e a criação de recursos na Render não foram executados.
+
+## Atualização da preparação Android e documentação
+
+A especificação ampliada está em [docs/PRODUCAO_TECNICA.md](docs/PRODUCAO_TECNICA.md). O roteiro USB define `PORT=3000` explicitamente; o fallback de produção continua 10000. O launcher foi confirmado no manifesto e no APK. A URL externa agora é configurável por `-PskippecasApiUrl=https://SEU-SERVICO.onrender.com/api/`, sem editar Kotlin. Consulte [validação Android](docs/VALIDACAO_ANDROID.md) e [evidência desta execução](docs/evidencias/EXECUCAO.md) para resultados atuais; os números anteriores descrevem a etapa anterior.

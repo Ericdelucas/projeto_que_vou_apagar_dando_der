@@ -1,0 +1,5 @@
+package: name='com.example.app' versionCode='1' versionName='1.0' platformBuildVersionName='17' platformBuildVersionCode='37' compileSdkVersion='37' compileSdkVersionCodename='17'
+sdkVersion:'24'
+targetSdkVersion:'37'
+application-label:'SkipPeças'
+launchable-activity: name='com.example.app.MainActivity'  label='' icon=''

@@ -1,0 +1,9 @@
+stateDiagram-v2
+ [*] --> SemSessao
+ SemSessao --> Autenticando: enviar credenciais
+ Autenticando --> Autenticado: 200 e JWT
+ Autenticando --> SemSessao: 400/401/500 ou rede
+ Autenticado --> SemSessao: expiração / 401
+ Autenticado --> ContaExcluida: DELETE confirmado 204
+ ContaExcluida --> SemSessao: token rejeitado
+ SemSessao --> [*]

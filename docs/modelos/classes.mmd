@@ -1,0 +1,37 @@
+classDiagram
+ class User {
+ +int id
+ +string name
+ +string email
+ +string role
+ }
+ class Product {
+ +int id
+ +decimal price
+ +bool is_active
+ }
+ class Post {
+ +int id
+ +string description
+ }
+ class UserModel {
+ +findByEmail(email)
+ +createUser(data)
+ }
+ class SettingsModel {
+ +blockUser(userId, targetId)
+ +unblockUser(userId, blockId)
+ +deleteAccount(userId)
+ }
+ class Favorite {
+ +int id
+ +int user_id
+ +int product_id
+ }
+ User "1" --> "0..*" Product : anuncia
+ User "1" --> "0..*" Post : publica
+ Product "0..1" <-- "0..*" Post : referencia
+ User "1" --> "0..*" Favorite
+ Product "1" --> "0..*" Favorite
+ UserModel ..> User
+ SettingsModel ..> User

@@ -1,0 +1,6 @@
+flowchart LR
+ Android[Android / Retrofit] -->|HTTPS 443| Proxy[Proxy Render / TLS]
+ Proxy -->|PORT 10000| API[Node 24 / Express]
+ API -->|mysql2 TCP 3306| DB[(MySQL persistente)]
+ API --> Uploads[(back/uploads)]
+ API -. apenas demo .-> Mem[(SQLite em memória)]

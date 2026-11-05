@@ -1,0 +1,10 @@
+flowchart LR
+ U[Usuário] --> A((1. Autenticar))
+ A <--> D1[(D1 users)]
+ U --> B((2. Consultar e publicar))
+ B <--> D2[(D2 products / posts)]
+ U --> C((3. Gerir relações))
+ C <--> D3[(D3 favorites / blocked_users / user_follows)]
+ U --> E((4. Publicar mídia))
+ E --> D4[(D4 uploads)]
+ E --> D2

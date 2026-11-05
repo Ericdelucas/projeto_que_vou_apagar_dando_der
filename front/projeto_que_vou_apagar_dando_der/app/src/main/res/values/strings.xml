@@ -93,7 +93,7 @@
     <string name="login_too_many_requests">Muitas tentativas. Aguarde um pouco e tente novamente.</string>
     <string name="login_server_error">Não foi possível entrar agora. Tente novamente em instantes.</string>
     <string name="login_network_error">Não foi possível conectar ao servidor. Confira sua conexão e tente novamente.</string>
-    <string name="app_name">Peças &amp; Customizações</string>
+    <string name="app_name">SkipPeças</string>
     <string name="title_home">Home</string>
     <string name="title_marketplace">Marketplace</string>
     <string name="title_vender">Vender</string>

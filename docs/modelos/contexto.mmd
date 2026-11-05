@@ -1,0 +1,7 @@
+flowchart LR
+ Comprador -->|consulta e favoritos| Sistema[SkipPeças]
+ Vendedor -->|anúncios e perfil| Sistema
+ Sistema -->|dados relacionais| MySQL[(MySQL)]
+ Sistema -->|fotos| Disco[(Uploads persistentes)]
+ Operador -->|deploy e variáveis| Render[Render]
+ Render --> Sistema

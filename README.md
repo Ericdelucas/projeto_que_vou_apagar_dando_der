@@ -1,11 +1,48 @@
-# SkipPeças — ligar o backend
+# SkipPeças — Android e API Node.js
+
+Aplicativo Android nativo de descoberta de peças, anúncios, favoritos e perfis. Não é uma SPA web.
+
+## Instalação do zero
+
+Requisitos: Git, Node.js 24, npm, Android Studio com SDK 37, JDK compatível com o Gradle do projeto e platform-tools (adb) no PATH. Use o Gradle Wrapper incluído.
+
+```bash
+git clone https://github.com/Ericdelucas/projeto_que_vou_apagar_dando_der.git Engenharia
+cd Engenharia
+cd back
+npm ci
+cp .env.example .env
+```
+
+O exemplo usa porta 10000. Para o Android por USB, o roteiro abaixo define explicitamente PORT=3000, que corresponde à URL local do aplicativo. Em produção use a URL HTTPS do serviço, não localhost.
+
+```bash
+cd back
+npm test
+npm run test:smoke
+```
+
+Se já estiver em `back/`, não repita `cd back`. Na raiz, abra `front/projeto_que_vou_apagar_dando_der/` no Android Studio ou execute:
+
+```bash
+cd front/projeto_que_vou_apagar_dando_der
+./gradlew clean assembleDebug testDebugUnitTest lintDebug
+```
+
+- [Produção técnica e especificação](docs/PRODUCAO_TECNICA.md)
+- [Modelos e diagramas](docs/MODELOS.md)
+- [Modelagem visual](docs/INTERFACE.md)
+- [Roteiro de instalação e demonstração](docs/VALIDACAO_ANDROID.md)
+- [Deploy Render](RELATORIO_DEPLOY_RENDER.md)
+
+## Ligar o backend por USB
 
 Com o celular conectado por USB e a depuração USB autorizada, **copie somente o bloco abaixo e cole no terminal**. As dependências já devem estar instaladas e o Node.js deve ser versão 24 ou superior.
 
 ```bash
-cd /home/eric/Documentos/GitHub/Engenharia/back &&
-/home/eric/Android/Sdk/platform-tools/adb reverse tcp:3000 tcp:3000 &&
-DB_MODE=memory npm start
+cd back &&
+adb reverse tcp:3000 tcp:3000 &&
+PORT=3000 DB_MODE=memory npm start
 ```
 
 Esse bloco conecta o celular ao computador pela porta 3000 e inicia o backend sem precisar de MySQL. Use novamente quando precisar ligar o projeto. Se desconectar o celular, pare o backend com Ctrl+C, reconecte o USB e execute o bloco novamente.

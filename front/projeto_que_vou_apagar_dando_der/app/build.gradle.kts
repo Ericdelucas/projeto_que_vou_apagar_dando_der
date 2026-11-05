@@ -14,6 +14,12 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
+        val apiUrl = providers.gradleProperty("skippecasApiUrl").orElse("http://localhost:3000/api/").get()
+        require(apiUrl.endsWith("/api/")) { "skippecasApiUrl deve terminar em /api/" }
+        require(apiUrl == "http://localhost:3000/api/" || apiUrl.startsWith("https://")) {
+            "Use HTTPS para a API publicada."
+        }
+        buildConfigField("String", "API_BASE_URL", "\"${apiUrl.replace("\\", "\\\\").replace("\"", "\\\"")}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,6 +36,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
 }
@@ -58,5 +65,7 @@ kotlin {
     }
 }
 tasks.withType<JavaCompile>().configureEach {
-    options.compilerArgs.addAll(listOf("-Xlint:all", "-Werror"))
+    // O AGP gera comentário Javadoc antes do package em BuildConfig.java.
+    // Essa categoria do JDK acusa o arquivo gerado; os demais warnings seguem fatais.
+    options.compilerArgs.addAll(listOf("-Xlint:all,-dangling-doc-comments", "-Werror"))
 }

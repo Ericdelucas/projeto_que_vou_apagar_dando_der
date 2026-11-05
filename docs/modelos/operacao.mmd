@@ -1,0 +1,18 @@
+sequenceDiagram
+ actor U as Usuário
+ participant V as BloqueadosFragment
+ participant A as SettingsApi
+ participant C as settingsController
+ participant M as settingsModel
+ participant D as MySQL
+ U->>V: confirmar bloqueio
+ V->>A: block(token, id)
+ A->>C: POST /api/settings/block
+ C->>M: blockUser(userId, targetId)
+ M->>D: BEGIN / SELECT FOR UPDATE
+ M->>D: INSERT ON DUPLICATE / SELECT
+ D-->>M: bloqueio
+ M->>D: COMMIT
+ M-->>C: publicBlock
+ C-->>A: JSON
+ A-->>V: atualizar lista

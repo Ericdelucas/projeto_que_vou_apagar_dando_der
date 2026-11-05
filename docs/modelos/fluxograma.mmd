@@ -1,0 +1,12 @@
+flowchart TD
+ Inicio((Início)) --> Login[Login]
+ Login --> Token{Token válido?}
+ Token -->|Não| Erro[Exibir erro e pedir login]
+ Token -->|Sim| Role{Vendedor?}
+ Role -->|Não| Negar[403 sem permissão]
+ Role -->|Sim| Form[Preencher anúncio]
+ Form --> Valido{Dados válidos?}
+ Valido -->|Não| Corrigir[400 corrigir campos]
+ Corrigir --> Form
+ Valido -->|Sim| Salvar[Persistir anúncio]
+ Salvar --> Fim((201 / atualizar lista))

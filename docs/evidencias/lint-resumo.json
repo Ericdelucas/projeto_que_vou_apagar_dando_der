@@ -1,0 +1,112 @@
+[
+  {
+    "severidade": "Warning",
+    "regra": "AndroidGradlePluginVersion",
+    "quantidade": 2
+  },
+  {
+    "severidade": "Warning",
+    "regra": "Autofill",
+    "quantidade": 13
+  },
+  {
+    "severidade": "Warning",
+    "regra": "ContentDescription",
+    "quantidade": 8
+  },
+  {
+    "severidade": "Warning",
+    "regra": "DrawAllocation",
+    "quantidade": 1
+  },
+  {
+    "severidade": "Warning",
+    "regra": "EmptySuperCall",
+    "quantidade": 5
+  },
+  {
+    "severidade": "Warning",
+    "regra": "GradleDependency",
+    "quantidade": 2
+  },
+  {
+    "severidade": "Warning",
+    "regra": "HardcodedText",
+    "quantidade": 22
+  },
+  {
+    "severidade": "Warning",
+    "regra": "NestedWeights",
+    "quantidade": 5
+  },
+  {
+    "severidade": "Warning",
+    "regra": "NewerVersionAvailable",
+    "quantidade": 4
+  },
+  {
+    "severidade": "Warning",
+    "regra": "ObsoleteSdkInt",
+    "quantidade": 1
+  },
+  {
+    "severidade": "Warning",
+    "regra": "Overdraw",
+    "quantidade": 8
+  },
+  {
+    "severidade": "Warning",
+    "regra": "PluralsCandidate",
+    "quantidade": 3
+  },
+  {
+    "severidade": "Warning",
+    "regra": "RelativeOverlap",
+    "quantidade": 1
+  },
+  {
+    "severidade": "Warning",
+    "regra": "SetTextI18n",
+    "quantidade": 1
+  },
+  {
+    "severidade": "Warning",
+    "regra": "SmallSp",
+    "quantidade": 2
+  },
+  {
+    "severidade": "Warning",
+    "regra": "TypographyEllipsis",
+    "quantidade": 3
+  },
+  {
+    "severidade": "Warning",
+    "regra": "Typos",
+    "quantidade": 1
+  },
+  {
+    "severidade": "Warning",
+    "regra": "UnusedResources",
+    "quantidade": 45
+  },
+  {
+    "severidade": "Warning",
+    "regra": "UseCompoundDrawables",
+    "quantidade": 1
+  },
+  {
+    "severidade": "Warning",
+    "regra": "UseKtx",
+    "quantidade": 8
+  },
+  {
+    "severidade": "Warning",
+    "regra": "UseTomlInstead",
+    "quantidade": 5
+  },
+  {
+    "severidade": "Warning",
+    "regra": "UselessParent",
+    "quantidade": 1
+  }
+]

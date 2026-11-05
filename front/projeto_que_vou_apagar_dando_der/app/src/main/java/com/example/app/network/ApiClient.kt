@@ -1,5 +1,6 @@
 package com.example.app.network
 
+import com.example.app.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -7,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
     // Celular/emulador por ADB: execute adb reverse tcp:3000 tcp:3000.
-    const val BASE_URL = "http://localhost:3000/api/"
+    const val BASE_URL = BuildConfig.API_BASE_URL
 
     private val retrofit: Retrofit by lazy {
         val client = OkHttpClient.Builder()

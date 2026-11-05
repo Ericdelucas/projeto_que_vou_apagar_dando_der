@@ -1,0 +1,70 @@
+erDiagram
+  users {
+    INT id
+    VARCHAR(255) name
+    VARCHAR(255) email
+    VARCHAR(255) password
+    ENUM(comprador_vendedor) role
+    TEXT avatar_url
+    VARCHAR(500) bio
+    TIMESTAMP last_active_at
+    TIMESTAMP created_at
+  }
+  products {
+    INT id
+    VARCHAR(255) title
+    DECIMAL(10_2) price
+    TEXT image_url
+    TEXT video_url
+    INT user_id
+    VARCHAR(255) category
+    VARCHAR(255) model
+    VARCHAR(255) location
+    BOOLEAN is_active
+  }
+  users ||--o{ products : user_id
+  posts {
+    INT id
+    INT user_id
+    INT product_id
+    TEXT video_url
+    TEXT image_url
+    TIMESTAMP created_at
+    TEXT description
+    INT likes_count
+    INT comments_count
+  }
+  users ||--o{ posts : user_id
+  products |o--o{ posts : product_id
+  favorites {
+    INT id
+    INT user_id
+    INT product_id
+    TIMESTAMP created_at
+  }
+  users ||--o{ favorites : user_id
+  products ||--o{ favorites : product_id
+  product_requests {
+    INT id
+    INT product_id
+    INT buyer_id
+    ENUM(pendente_aceita_recusada) status
+    TIMESTAMP created_at
+  }
+  products ||--o{ product_requests : product_id
+  users ||--o{ product_requests : buyer_id
+  user_follows {
+    INT follower_id
+    INT followed_id
+    TIMESTAMP created_at
+  }
+  users ||--o{ user_follows : follower_id
+  users ||--o{ user_follows : followed_id
+  blocked_users {
+    INT id
+    INT user_id
+    INT blocked_user_id
+    TIMESTAMP created_at
+  }
+  users ||--o{ blocked_users : user_id
+  users ||--o{ blocked_users : blocked_user_id
