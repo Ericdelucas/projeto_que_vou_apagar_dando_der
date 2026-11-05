@@ -5,6 +5,10 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class ApiEndpointTest {
+    @Test fun apkUsesPublishedApiWithoutManualConfiguration() {
+        assertEquals("https://skippecas-api.onrender.com/api/", ApiClient.BASE_URL)
+    }
+
     @Test fun renderUrlReceivesApiPath() {
         assertEquals("https://skippecas.example/api/", ApiEndpoint.normalize(" https://skippecas.example ", false))
         assertEquals("https://skippecas.example/api/", ApiEndpoint.normalize("https://skippecas.example/api", false))

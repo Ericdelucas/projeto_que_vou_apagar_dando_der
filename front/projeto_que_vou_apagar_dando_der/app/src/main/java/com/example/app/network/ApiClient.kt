@@ -9,41 +9,28 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    // Celular/emulador por ADB: execute adb reverse tcp:3000 tcp:3000.
     const val BASE_URL = BuildConfig.API_BASE_URL
 
-    var activeBaseUrl: String = BASE_URL
-        private set
-    private var configuredRetrofit: Retrofit? = null
-
+    // Migra instalações antigas sem reaproveitar sessões de outro servidor.
     fun initialize(context: Context) {
-        if (!BuildConfig.DEBUG) return
-        val saved = context.getSharedPreferences("api_connection", Context.MODE_PRIVATE).getString("url", null)
-        activeBaseUrl = saved?.let { runCatching { ApiEndpoint.normalize(it, true) }.getOrNull() } ?: BASE_URL
-        configuredRetrofit = null
+        val preferences = context.getSharedPreferences("api_connection", Context.MODE_PRIVATE)
+        if (preferences.getString("bound_api", null) != BASE_URL) {
+            TokenStore(context).clear()
+            preferences.edit().clear().putString("bound_api", BASE_URL).apply()
+        }
     }
 
-    fun configure(context: Context, url: String) {
-        check(BuildConfig.DEBUG)
-        val normalized = ApiEndpoint.normalize(url, true)
-        if (normalized != activeBaseUrl) TokenStore(context).clear()
-        activeBaseUrl = normalized
-        configuredRetrofit = null
-        context.getSharedPreferences("api_connection", Context.MODE_PRIVATE).edit().putString("url", normalized).apply()
-    }
-
-    private val retrofit: Retrofit
-        get() = configuredRetrofit ?: createRetrofit().also { configuredRetrofit = it }
+    private val retrofit: Retrofit by lazy { createRetrofit() }
 
     private fun createRetrofit(): Retrofit {
         val client = OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .callTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(90, TimeUnit.SECONDS)
+            .callTimeout(100, TimeUnit.SECONDS)
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(activeBaseUrl)
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

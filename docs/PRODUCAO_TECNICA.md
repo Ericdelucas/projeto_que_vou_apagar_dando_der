@@ -52,7 +52,7 @@ Os requisitos a seguir consolidam comportamentos observáveis do MVP. Cada requi
 | RNF01 | Segurança de sessão | bcrypt, JWT HS256 expira em 1h, acesso protegido sem token 401, comprador em anúncio 403. | Testado backend |
 | RNF02 | Segurança de entrada | Valores SQL parametrizados, corpo inválido 400, excesso 413, resposta de erro sem stack ou segredo. | Testado nos cenários cobertos; revisão contínua |
 | RNF03 | Integridade | FKs e unicidade ativas; rollback sem perda parcial; idempotência de favoritos/bloqueios. | Testado SQLite e mocks; MySQL real pendente |
-| RNF04 | Comunicação | Produção HTTPS; cliente connectTimeout=15s/readTimeout=15s/callTimeout=30s; CORS aberto. | Timeouts no código; HTTPS público pendente |
+| RNF04 | Comunicação | Produção HTTPS; cliente connectTimeout=15s/readTimeout=90s/callTimeout=100s; CORS aberto. | Timeouts no código; HTTPS público pendente |
 | RNF05 | Desempenho | Meta: p95 menor que 2s para consultas, 20 clientes concorrentes, base de 1000 anúncios; registrar hardware e resultado. | Meta proposta, carga não executada |
 | RNF06 | Usabilidade e adaptação | Loading, erro, sucesso e vazio; validar 360dp, 600dp, 1240dp e paisagem sem corte/rolagem horizontal indevida. | Recursos implementados; ensaio visual pendente |
 | RNF07 | Disponibilidade e persistência | Health 200 com módulos ok; meta 99,5% mensal após produção; MySQL e fotos sobrevivem a restart. | Meta proposta; medição e armazenamento pendentes |

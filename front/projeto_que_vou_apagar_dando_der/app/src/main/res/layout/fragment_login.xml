@@ -49,9 +49,6 @@
             <com.google.android.material.button.MaterialButton android:id="@+id/register_button"
                 style="@style/Widget.Material3.Button.TextButton" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="@string/register_title" android:textColor="@color/red_primary" />
-            <com.google.android.material.button.MaterialButton android:id="@+id/connection_button"
-                style="@style/Widget.Material3.Button.TextButton" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" android:text="@string/connection_configure" android:textColor="?attr/colorOnSurfaceVariant" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

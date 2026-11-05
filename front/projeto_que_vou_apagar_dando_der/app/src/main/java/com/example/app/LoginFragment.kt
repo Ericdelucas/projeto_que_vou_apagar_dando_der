@@ -8,12 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.app.BuildConfig
 import com.example.app.auth.TokenStore
-import com.example.app.network.ApiEndpoint
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.textfield.TextInputEditText
 import com.example.app.databinding.FragmentLoginBinding
 import com.example.app.network.ApiClient
 import com.example.app.network.LoginRequest
@@ -39,8 +34,6 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         registering = savedInstanceState?.getBoolean("registering") ?: false
         updateMode()
-        binding?.connectionButton?.visibility = if (BuildConfig.DEBUG) View.VISIBLE else View.GONE
-        binding?.connectionButton?.setOnClickListener { configureConnection() }
         binding?.registerButton?.setOnClickListener {
             registering = !registering
             updateMode()
@@ -172,7 +165,6 @@ class LoginFragment : Fragment() {
 
     private fun setLoading(loading: Boolean) {
         binding?.apply {
-            connectionButton.isEnabled = !loading
             if (loading) connectionMessage.visibility = View.GONE
             registerButton.isEnabled = !loading
             nameInput.isEnabled = !loading
@@ -186,44 +178,8 @@ class LoginFragment : Fragment() {
 
     private fun showConnectionFailure(error: Throwable) {
         if (error !is java.io.IOException) { showError(R.string.login_server_error); return }
-        val message = if (ApiClient.activeBaseUrl.startsWith("http://")) R.string.connection_local_error
-            else R.string.connection_remote_error
+        val message = R.string.connection_remote_error
         binding?.connectionMessage?.apply { setText(message); visibility = View.VISIBLE }
-    }
-
-    private fun configureConnection() {
-        if (!BuildConfig.DEBUG || loginCall != null || registerCall != null) return
-        val context = requireContext()
-        val padding = (24 * resources.displayMetrics.density).toInt()
-        val container = android.widget.LinearLayout(context).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-            setPadding(padding, 0, padding, 0)
-        }
-        val help = android.widget.TextView(context).apply { setText(R.string.connection_help) }
-        val field = TextInputLayout(context).apply { hint = getString(R.string.connection_url) }
-        val input = TextInputEditText(field.context).apply {
-            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_URI
-            setText(ApiClient.activeBaseUrl)
-            maxLines = 1
-        }
-        field.addView(input)
-        container.addView(help)
-        container.addView(field)
-        val dialog = MaterialAlertDialogBuilder(context).setTitle(R.string.connection_title)
-            .setView(container).setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.connection_save, null).create()
-        dialog.setOnShowListener {
-            dialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-                val normalized = runCatching { ApiEndpoint.normalize(input.text.toString(), true) }.getOrNull()
-                if (normalized == null) { field.error = getString(R.string.connection_invalid); return@setOnClickListener }
-                ApiClient.configure(context, normalized)
-                binding?.passwordInput?.text?.clear()
-                binding?.connectionMessage?.visibility = View.GONE
-                dialog.dismiss()
-                showError(R.string.connection_saved)
-            }
-        }
-        dialog.show()
     }
 
     private fun showError(message: Int) {

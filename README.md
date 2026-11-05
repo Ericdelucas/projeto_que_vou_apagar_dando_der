@@ -1,5 +1,7 @@
 # SkipPeças — Android e API Node.js
 
+**APK atual (1.1): conexão automática com `https://skippecas-api.onrender.com/api/`, sem configuração no aplicativo.** Para desenvolvimento local por USB, compile explicitamente com `-PskippecasApiUrl=http://localhost:3000/api/`. O roteiro USB abaixo só se aplica a esse build local. Veja [configuração Render e situação do banco](RELATORIO_DEPLOY_RENDER.md).
+
 Aplicativo Android nativo de descoberta de peças, anúncios, favoritos e perfis. Não é uma SPA web.
 
 ## Instalação do zero

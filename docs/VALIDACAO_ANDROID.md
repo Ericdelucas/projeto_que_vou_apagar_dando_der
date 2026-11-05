@@ -47,7 +47,7 @@ No terminal do Android:
 adb reverse tcp:3000 tcp:3000
 ```
 
-O backend tem fallback de porta 10000 para a Render; o roteiro USB define 3000 explicitamente. A configuração local padrão do APK usa `http://localhost:3000/api/`. Para compilar apontando à API publicada, substitua o domínio de exemplo pela URL real:
+O backend tem fallback de porta 10000 para a Render; o roteiro USB define 3000 explicitamente. O APK padrão usa `https://skippecas-api.onrender.com/api/`. Para desenvolvimento USB, compile com `-PskippecasApiUrl=http://localhost:3000/api/`. Para compilar apontando à API publicada, substitua o domínio de exemplo pela URL real:
 
 ```bash
 ./gradlew assembleDebug -PskippecasApiUrl=https://SEU-SERVICO.onrender.com/api/

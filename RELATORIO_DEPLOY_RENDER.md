@@ -1,5 +1,55 @@
 # SkipPeças — relatório de pré-deploy e guia Render
 
+## Atualização: APK conectado automaticamente à Render
+
+O serviço foi verificado em `https://skippecas-api.onrender.com/health`: HTTP 200, todos os módulos saudáveis, banco SQLite em memória (`DB_MODE=memory`, `volatile=true`). O APK versão 1.1 (versionCode 2) agora inclui `https://skippecas-api.onrender.com/api/` como URL padrão. O botão de configuração manual foi removido; preferências antigas de endereço são descartadas na atualização. Instale o APK novo sobre o antigo.
+
+Para resolver a conexão atual, **nenhuma mudança na Render é necessária**: o serviço já responde. As instruções anteriores sobre URL ainda não fornecida ou configuração dentro do aplicativo foram superadas por esta atualização. O histórico abaixo registra as etapas anteriores.
+
+### O que conferir no painel da Render
+
+Em **skippecas-api → Settings**, mantenha:
+
+| Campo | Valor |
+| --- | --- |
+| Branch | `main` |
+| Root Directory | `back` |
+| Build Command | `npm install` |
+| Start Command | `npm start` |
+| Health Check Path | `/health` |
+| Render Subdomain | Enabled |
+
+O prefixo `back/ $` exibido pelo painel representa o diretório/prompt, não faz parte do comando. Não coloque `/api` no Health Check Path; `/api/` pertence à URL base do aplicativo.
+
+Em **Environment**, confira `NODE_ENV=production`, `PORT=10000`, `NODE_VERSION=24.21.0`. O serviço está comprovadamente em `DB_MODE=memory`; pode mantê-lo para demonstração sem MySQL. Não é necessário criar variável de frontend, configurar CORS no painel ou trocar os comandos para conectar este APK.
+
+### Para cadastros não desaparecerem
+
+O banco atual é temporário. Antes de usar contas reais, disponibilize um MySQL persistente, aplique o schema e vá a **Environment → Edit/Add Environment Variable**:
+
+| Chave | O que colocar |
+| --- | --- |
+| `DB_MODE` | `mysql`, somente depois de o banco estar pronto |
+| `DB_HOST` | Host real fornecido pelo provedor MySQL; não localhost |
+| `DB_PORT` | Porta fornecida pelo provedor, normalmente 3306 |
+| `DB_NAME` | Nome do banco com o schema SkipPeças aplicado |
+| `DB_USER` | Usuário desse banco |
+| `DB_PASSWORD` | Senha desse usuário, apenas no painel |
+| `JWT_SECRET` | Segredo aleatório longo e estável, apenas no painel |
+
+Se precisar gerar JWT_SECRET, execute `node -e "console.log(require('node:crypto').randomBytes(48).toString('hex'))"` localmente e copie o resultado para o campo. Não use o texto do comando como valor. Salve as variáveis e use **Manual Deploy → Deploy latest commit** se o painel não iniciar o deploy. O cliente atual ainda exige ajuste de TLS se o provedor MySQL obrigar certificados/opções específicas.
+
+Após migrar, `/health` deve indicar `engine=mysql`, `volatile=false` e todos os módulos em `ok`. Não altere para mysql sem preencher as credenciais e aplicar o schema: isso deixará a API indisponível. Fotos também exigem armazenamento persistente, conforme a seção específica deste relatório.
+
+### Inicialização do plano Free
+
+O plano Free pode suspender o serviço após inatividade e levar cerca de um minuto para acordar. O cliente passou a aguardar até 100 segundos por chamada, sem repetir automaticamente cadastros. Isso não garante disponibilidade contínua. Fonte: [limites do plano Free](https://render.com/docs/free).
+
+### Hook exposto na captura
+
+A captura mostrou o Deploy Hook. Em **Settings → Deploy → Deploy Hook → Regenerate hook**, gere outro para invalidar o endereço exposto. Não compartilhe o novo hook nem o use como URL do APK.
+
+
 Data: 04/11/2026. Ambiente local: Node.js 24.21.0.
 
 ## Resultado da validação
