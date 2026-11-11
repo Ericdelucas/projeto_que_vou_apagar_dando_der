@@ -199,4 +199,14 @@
     <string name="connection_remote_error">Não foi possível alcançar a API. Verifique sua internet e se o serviço na Render está disponível. Se estiver iniciando, aguarde e tente novamente.</string>
 <string name="filter_model">Modelo: todos</string><string name="filter_category">Categoria: todas</string><string name="filter_piece">Peça: todas</string>
 <string name="feed_search_hint">Buscar peças ou publicações</string><string name="profile_photo_choose">Alterar foto da galeria</string><string name="profile_photo_help">Escolha uma foto e salve suas alterações.</string>
+<string name="avatar_title">Sua foto de perfil</string>
+<string name="avatar_save">Salvar foto</string>
+<string name="avatar_saved">Foto de perfil atualizada.</string>
+<string name="avatar_choose">Escolher foto</string>
+<string name="avatar_hint">Escolha uma imagem da galeria. Você verá a prévia antes de salvar.</string>
+<string name="avatar_selected">Foto selecionada. Toque em Salvar foto para confirmar.</string>
+<string name="avatar_saving">Enviando sua foto…</string>
+<string name="avatar_invalid_image">Não foi possível usar esta imagem. Escolha outra foto JPEG, PNG ou WebP.</string>
+<string name="avatar_service_outdated">O servidor ainda não recebeu a atualização de foto de perfil. É necessário publicar a versão atual na Render.</string>
+<string name="avatar_network_error">Não foi possível enviar sua foto. Verifique a conexão e tente salvar novamente.</string>
 </resources>

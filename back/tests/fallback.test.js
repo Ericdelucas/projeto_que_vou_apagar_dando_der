@@ -4,6 +4,7 @@ import { once } from 'node:events';
 import net from 'node:net';
 import jwt from 'jsonwebtoken';
 import { test } from 'node:test';
+import { demoImages } from '../src/config/demoMedia.js';
 
 test('APK sem MySQL: fallback automático e todos os módulos com dados/estado reais', async t => {
   const socket = net.createServer().listen(0, '127.0.0.1'); await once(socket, 'listening');
@@ -39,8 +40,16 @@ test('APK sem MySQL: fallback automático e todos os módulos com dados/estado r
   assert.notEqual(process.env.JWT_SECRET, 'segredo-original-mysql');
   assert.equal((await send('GET', '/api/users/me', oldToken)).status, 401);
   assert.equal(feed.length, 198); assert.ok(feed.every(post => post.user));
-  const image = await fetch(feed.find(post => post.product)?.product.image_url);
-  assert.equal(image.status, 200); assert.equal(image.headers.get('content-type'), 'image/png');
+  // A API preserva as fotos HTTPS externas; os testes não dependem do CDN.
+  const photos = feed.map(post => post.image_url || post.product?.image_url);
+  assert.ok(photos.every(url => Object.values(demoImages).includes(url)));
+  assert.equal(new Set(photos).size, 5);
+  const marketplace = await json(await send('GET', '/api/marketplace'));
+  assert.equal(new Set(marketplace.map(product => product.image_url)).size, 3);
+  for (const product of marketplace) {
+    assert.equal(feed.find(post => post.product?.id === product.id).product.image_url, product.image_url);
+    assert.equal((await json(await send('GET', `/api/products/${product.id}`))).image_url, product.image_url);
+  }
   assert.equal((await json(await send('GET', '/api/marketplace?min_price=50&max_price=200'))).length, 1);
   assert.equal((await json(await send('GET', '/api/marketplace?category=Ilumina%C3%A7%C3%A3o')))[0].id, 2);
   const filters = await json(await send('GET', '/api/marketplace/filters')); assert.equal(filters.models.length, 3);
@@ -72,7 +81,7 @@ test('APK sem MySQL: fallback automático e todos os módulos com dados/estado r
   assert.equal((await send('GET', '/api/seller/products', buyer.token)).status, 403);
   await json(await send('POST', '/api/seller/products', seller.token, {
     title: 'Peça nova', price: '25.50', category: 'Interior', model: 'Gol', location: 'Palmas',
-    image_url: feed[0].product.image_url,
+    image_url: marketplace[0].image_url,
   }), 201);
   const blocked = await json(await send('GET', '/api/settings/blocked', buyer.token)); assert.equal(blocked.length, 1);
   assert.equal((await send('DELETE', `/api/settings/block/${blocked[0].id}`, seller.token)).status, 404);

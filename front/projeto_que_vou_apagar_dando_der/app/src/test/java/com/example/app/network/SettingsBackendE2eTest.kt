@@ -9,6 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 import java.util.UUID
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 /** Integração opt-in: usa apenas a API e o banco descartáveis definidos pelo executor E2E. */
 class SettingsBackendE2eTest {
@@ -48,11 +50,25 @@ class SettingsBackendE2eTest {
             val sellerAuth = requireNotNull(sellerToken)
             val buyerAuth = requireNotNull(buyerToken)
             val sellerId = requireNotNull(seller.user).id
+            val photo = requireNotNull(javaClass.getResourceAsStream("/avatar.png")).use { it.readBytes() }
+            val avatarResult = users.uploadAvatar(buyerAuth, photo.toRequestBody("image/png".toMediaType())).execute()
+            assertEquals(200, avatarResult.code())
+            val avatarUrl = requireNotNull(avatarResult.body()?.avatarUrl)
+            assertEquals(avatarUrl, users.me(buyerAuth).execute().body()?.avatarUrl)
+            assertNotEquals(avatarUrl, users.me(sellerAuth).execute().body()?.avatarUrl)
+            val uploadedFile = java.net.URI(avatarUrl).path.substringAfterLast('/')
+            System.getenv("SKIPPECAS_E2E_UPLOAD_DIRECTORY")?.let { directory ->
+                require(uploadedFile.matches(Regex("[a-f0-9-]+\\.png")))
+                java.io.File(directory, uploadedFile).delete()
+            }
+            val imageUrl = "https://images.pexels.com/photos/10040636/pexels-photo-10040636.jpeg?auto=compress&cs=tinysrgb&w=960"
             val product = requireNotNull(sales.createProduct(sellerAuth, NewSellerProduct("Volante E2E", "199.90",
-                "Interior", "Mustang", "https://example.com/p.jpg", null, "Palmas")).execute().body())
+                "Interior", "Mustang", imageUrl, null, "Palmas")).execute().body())
             assertTrue(market.getProducts(model = "Mustang", minPrice = "100", maxPrice = "250")
                 .execute().body().orEmpty().any { it.id == product.id })
-            assertEquals(product.id, feed.getProduct(product.id).execute().body()?.id)
+            val details = requireNotNull(feed.getProduct(product.id).execute().body())
+            assertEquals(product.id, details.id)
+            assertEquals(imageUrl, details.imageUrl)
             assertTrue(favorites.setFavorite(buyerAuth, FavoriteRequest(product.id, true)).execute().body()!!.isFavorite)
             assertEquals(product.id, favorites.getFavorites(buyerAuth).execute().body()!!.single().productId)
             assertEquals(sellerId, users.search(buyerAuth, "VendedorE2e").execute().body()!!.single().id)

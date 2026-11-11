@@ -86,10 +86,10 @@ class FeedAdapter(
             ui.buyButton.setOnClickListener { product?.let { onProductClick(it.id) } }
             bindFavorite(post)
             ui.postImage.contentDescription = product?.title ?: post.description
-            Glide.with(ui.root).load(com.example.app.network.MediaUrl.resolve(post.imageUrl ?: product?.imageUrl))
+            Glide.with(ui.root).load(com.example.app.network.MediaUrl.resolve(post.coverImageUrl))
                 .placeholder(R.drawable.ic_steering_wheel)
                 .error(R.drawable.ic_steering_wheel).into(ui.postImage)
-            ui.postImage.visibility = if ((post.imageUrl ?: product?.imageUrl).isNullOrBlank()) View.GONE else View.VISIBLE
+            ui.postImage.visibility = if (post.coverImageUrl == null) View.GONE else View.VISIBLE
             videoUrl = post.videoUrl?.takeIf { it.isNotBlank() } ?: product?.videoUrl?.takeIf { it.isNotBlank() }
             ui.playVideo.visibility = if (videoUrl == null) View.GONE else View.VISIBLE
             ui.playVideo.setOnClickListener {
@@ -122,7 +122,7 @@ class FeedAdapter(
             ui.postVideo.visibility = View.GONE
             ui.playVideo.visibility = if (videoUrl == null) View.GONE else View.VISIBLE
             val post = currentList.getOrNull(bindingAdapterPosition)
-            ui.postImage.visibility = if ((post?.imageUrl ?: post?.product?.imageUrl).isNullOrBlank()) View.GONE else View.VISIBLE
+            ui.postImage.visibility = if (post?.coverImageUrl == null) View.GONE else View.VISIBLE
         }
     }
 }

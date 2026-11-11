@@ -1,6 +1,8 @@
 # SkipPeças — Android e API Node.js
 
-**APK atual (1.1): conexão automática com `https://skippecas-api.onrender.com/api/`, sem configuração no aplicativo.** Para desenvolvimento local por USB, compile explicitamente com `-PskippecasApiUrl=http://localhost:3000/api/`. O roteiro USB abaixo só se aplica a esse build local. Veja [configuração Render e situação do banco](RELATORIO_DEPLOY_RENDER.md).
+**APK atual (1.4): conexão automática com `https://skippecas-api.onrender.com/api/`, sem configuração no aplicativo.** Para desenvolvimento local por USB, compile explicitamente com `-PskippecasApiUrl=http://localhost:3000/api/`. O roteiro USB abaixo só se aplica a esse build local. Veja [configuração Render e situação do banco](RELATORIO_DEPLOY_RENDER.md).
+
+O ícone do aplicativo agora usa o volante do SkipPeças. O modo memory traz fotos automotivas reais no feed e marketplace; a API publicada precisa receber o backend atualizado para servir esse catálogo. Veja [imagens e créditos](docs/IMAGENS_DEMO.md) e [validação do APK 1.4](docs/evidencias/APK_IMAGENS_2026-11-11.md).
 
 Aplicativo Android nativo de descoberta de peças, anúncios, favoritos e perfis. Não é uma SPA web.
 

@@ -34,7 +34,11 @@ data class PostResponse(
     @SerializedName("comments_count") val commentsCount: Int,
     val product: ProductTag?,
     @SerializedName("image_url") val imageUrl: String? = null,
-)
+) {
+    val coverImageUrl: String?
+        get() = imageUrl?.takeIf { it.isNotBlank() }
+            ?: product?.imageUrl?.takeIf { it.isNotBlank() }
+}
 
 data class NewPostRequest(val description: String, val image_url: String?, val video_url: String?)
 data class CreatedPost(val id: Int)

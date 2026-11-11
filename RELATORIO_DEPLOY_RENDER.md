@@ -1,5 +1,7 @@
 # SkipPeças — relatório de pré-deploy e guia Render
 
+**Foto de perfil ainda falhando?** Foi confirmado HTTP 404 na rota pública de avatar; o commit que contém a rota já está no GitHub, mas precisa ser implantado. Veja [passo a passo da correção e APK 1.3](docs/FOTO_PERFIL.md).
+
 **Atualização de interface 1.2:** filtros, tema escuro e mídia HTTPS corrigidos. A troca de foto da galeria depende de publicar a nova rota de backend; veja [passos exatos](docs/CORRECOES_INTERFACE.md). As instruções da versão 1.1 abaixo são históricas.
 
 ## Atualização: APK conectado automaticamente à Render

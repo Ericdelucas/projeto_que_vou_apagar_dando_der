@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { readFile, unlink } from 'node:fs/promises';
 import { test } from 'node:test';
+import { demoImages } from '../src/config/demoMedia.js';
 
 process.env.DB_MODE = 'memory';
 const { default: app } = await import('../src/app.js');
@@ -37,5 +38,5 @@ test('foto de perfil: autenticação, formato, isolamento e mídia HTTPS na Rend
   const profile = await (await fetch(base + '/api/users/me', { headers: { Authorization: `Bearer ${buyer.token}` } })).json();
   assert.equal(profile.avatar_url, 'https://skippecas-api.onrender.com/uploads/' + filename);
   const feed = await (await fetch(base + '/api/feed')).json();
-  assert.ok(feed.some(post => (post.image_url || post.product?.image_url)?.startsWith('https://skippecas-api.onrender.com/')));
+  assert.equal(feed.find(post => post.product?.id === 1).product.image_url, demoImages.steeringWheel);
 });

@@ -1,0 +1,372 @@
+{
+  "date": "2026-11-11",
+  "timezone": "America/Araguaina",
+  "runner": "Codex, ambiente local",
+  "environment": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "java_home": "/opt/android-studio/jbr"
+  },
+  "backend": {
+    "tests": 20,
+    "pass": 20,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 8330.369833
+  },
+  "android_local_unit_tests": {
+    "testDebugUnitTest": {
+      "totals": {
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1
+      },
+      "suites": [
+        {
+          "name": "com.example.app.ExampleUnitTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.feed.FeedFiltersTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.ApiEndpointTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.AuthApiTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.AvatarApiTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.AvatarUploadErrorTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.FavoritesApiTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.FeedApiTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.MarketplaceApiTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.MediaUrlTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.SellerApiTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.SettingsApiTest",
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.network.SettingsBackendE2eTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 1
+        },
+        {
+          "name": "com.example.app.network.UserApiTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "name": "com.example.app.seller.SellerFiltersTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ]
+    }
+  },
+  "android_memory_integration": {
+    "totals": {
+      "tests": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "suites": [
+      {
+        "name": "com.example.app.ExampleUnitTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.001
+      },
+      {
+        "name": "com.example.app.feed.FeedFiltersTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.059
+      },
+      {
+        "name": "com.example.app.network.ApiEndpointTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.009
+      },
+      {
+        "name": "com.example.app.network.AuthApiTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.429
+      },
+      {
+        "name": "com.example.app.network.AvatarApiTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.022
+      },
+      {
+        "name": "com.example.app.network.AvatarUploadErrorTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.001
+      },
+      {
+        "name": "com.example.app.network.FavoritesApiTest",
+        "tests": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.152
+      },
+      {
+        "name": "com.example.app.network.FeedApiTest",
+        "tests": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.136
+      },
+      {
+        "name": "com.example.app.network.MarketplaceApiTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.107
+      },
+      {
+        "name": "com.example.app.network.MediaUrlTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.001
+      },
+      {
+        "name": "com.example.app.network.SellerApiTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.066
+      },
+      {
+        "name": "com.example.app.network.SettingsApiTest",
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.16
+      },
+      {
+        "name": "com.example.app.network.SettingsBackendE2eTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 1.964
+      },
+      {
+        "name": "com.example.app.network.UserApiTest",
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.147
+      },
+      {
+        "name": "com.example.app.seller.SellerFiltersTest",
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time_seconds": 0.001
+      }
+    ]
+  },
+  "lint": {
+    "debug": {
+      "severity": {
+        "Warning": 140
+      },
+      "categories": {
+        "EmptySuperCall": 5,
+        "AndroidGradlePluginVersion": 2,
+        "GradleDependency": 2,
+        "NewerVersionAvailable": 4,
+        "Typos": 1,
+        "PluralsCandidate": 3,
+        "DrawAllocation": 1,
+        "ObsoleteSdkInt": 1,
+        "UseCompoundDrawables": 1,
+        "NestedWeights": 5,
+        "Overdraw": 9,
+        "UnusedResources": 55,
+        "UselessParent": 1,
+        "TypographyEllipsis": 3,
+        "SmallSp": 2,
+        "Autofill": 9,
+        "UseKtx": 10,
+        "UseTomlInstead": 5,
+        "ContentDescription": 5,
+        "SetTextI18n": 1,
+        "HardcodedText": 14,
+        "RelativeOverlap": 1
+      }
+    },
+    "release": {
+      "severity": {
+        "Warning": 132
+      },
+      "categories": {
+        "EmptySuperCall": 5,
+        "Typos": 1,
+        "PluralsCandidate": 3,
+        "DrawAllocation": 1,
+        "ObsoleteSdkInt": 1,
+        "UseCompoundDrawables": 1,
+        "NestedWeights": 5,
+        "Overdraw": 9,
+        "UnusedResources": 55,
+        "UselessParent": 1,
+        "TypographyEllipsis": 3,
+        "SmallSp": 2,
+        "Autofill": 9,
+        "UseKtx": 10,
+        "UseTomlInstead": 5,
+        "ContentDescription": 5,
+        "SetTextI18n": 1,
+        "HardcodedText": 14,
+        "RelativeOverlap": 1
+      }
+    }
+  },
+  "dependencies": {
+    "dependency_nodes": 161,
+    "unique_packages": 95,
+    "problems": []
+  },
+  "builds": {
+    "debug": {
+      "result": "BUILD SUCCESSFUL",
+      "duration": "1m 24s"
+    },
+    "release": {
+      "result": "BUILD SUCCESSFUL",
+      "duration": "1m 54s"
+    },
+    "memory_integration": {
+      "result": "BUILD SUCCESSFUL",
+      "duration": "17s"
+    }
+  },
+  "apk": {
+    "debug": {
+      "path": "front/projeto_que_vou_apagar_dando_der/app/build/outputs/apk/debug/app-debug.apk",
+      "bytes": 8688042,
+      "sha256": "eab96eff34f622eb32d4e55f0563de4651df978927f978abcf25617a862a4448",
+      "zip_crc_verified": true,
+      "signature": "APK Signature Scheme v2 válida; um assinante"
+    },
+    "release": {
+      "path": "front/projeto_que_vou_apagar_dando_der/app/build/outputs/apk/release/app-release-unsigned.apk",
+      "bytes": 6904734,
+      "sha256": "e29349714fba77cf7165b576cb78dcbe567afe253885c42b0876b6422597338e",
+      "zip_crc_verified": true,
+      "signature": "unsigned; sem assinatura release configurada"
+    }
+  },
+  "launcher": {
+    "package": "com.example.app",
+    "version_name": "1.4",
+    "version_code": 5,
+    "activity": "com.example.app.MainActivity",
+    "exported": true,
+    "main_launcher_filters": 1
+  },
+  "not_executed": [
+    "Integração com MySQL real isolado",
+    "Testes instrumentados e navegação no aparelho/emulador: ADB sem dispositivos e sem AVD",
+    "Validação da API publicada na Render"
+  ],
+  "application_source_changed_in_this_run": false
+}

@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
+import { fileURLToPath } from 'node:url';
 
 // Fixture descartável: não lê .env e nunca acessa MySQL ou dados persistentes.
 process.env.DOTENV_CONFIG_PATH = '/dev/null';
@@ -14,7 +15,7 @@ try {
   const child = spawn('./gradlew', ['--offline', '--no-configuration-cache',
     'testDebugUnitTest', '--rerun-tasks'], {
     cwd: new URL('../../../front/projeto_que_vou_apagar_dando_der/', import.meta.url),
-    env: { ...process.env, SKIPPECAS_E2E_URL: `http://127.0.0.1:${server.address().port}/api/` },
+    env: { ...process.env, SKIPPECAS_E2E_UPLOAD_DIRECTORY: fileURLToPath(new URL('../../uploads/', import.meta.url)), SKIPPECAS_E2E_URL: `http://127.0.0.1:${server.address().port}/api/` },
     stdio: 'inherit',
   });
   const timer = setTimeout(() => child.kill('SIGTERM'), 180000);

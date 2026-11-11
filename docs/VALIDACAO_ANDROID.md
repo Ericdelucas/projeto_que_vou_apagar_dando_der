@@ -2,6 +2,8 @@
 
 ## Launcher e identificação
 
+A revisão de 11/11/2026 confirmou que o registro do launcher já estava correto antes das alterações: não foi necessário duplicar nem remover filtros. O APK 1.4 (versionCode 5) contém exatamente um `MAIN`/`LAUNCHER`, `MainActivity` exportada, permissão de Internet e os novos ícones de volante. O filtro `VIEW` separado atende ao deep link e não cria outra entrada na gaveta. Veja os [resultados e limites desta revisão](evidencias/APK_IMAGENS_2026-11-11.md).
+
 Verificado em `app/src/main/AndroidManifest.xml`: `.MainActivity` é exportada e contém `android.intent.action.MAIN` e `android.intent.category.LAUNCHER`. Ela carrega `nav_graph.xml`, cuja entrada é `nav_login`. A etiqueta em `strings.xml` foi alinhada para **SkipPeças**; o applicationId permanece `com.example.app` para preservar compatibilidade com instalações anteriores.
 
 Também foi inspecionado o APK gerado com `aapt dump badging`: `application-label:'SkipPeças'` e `launchable-activity: name='com.example.app.MainActivity'`. Isso prova a presença do launcher no pacote compilado, não a instalação em celular.
@@ -29,6 +31,8 @@ adb shell am start -W -n com.example.app/.MainActivity
 ```
 
 Se houver erro de assinatura incompatível, faça backup dos dados necessários e só então considere desinstalar a versão antiga. A desinstalação apaga os dados locais. A instalação pelo gerenciador de arquivos pode exigir permissão para instalar aplicativos dessa origem. O botão Abrir depende do instalador; a evidência técnica é a Activity resolvida e iniciada com sucesso. Referência: [build Android por linha de comando](https://developer.android.com/build/building-cmdline).
+
+Se o APK foi enviado pelo WhatsApp, abrir o anexo pode apenas exibir o instalador. Conclua **Instalar** ou **Atualizar** e procure **SkipPeças** na gaveta, pelo ícone vermelho com volante branco; um atalho na tela inicial depende do launcher. Caso não apareça, conecte o aparelho com depuração USB autorizada e execute os comandos acima para obter o erro efetivo. A presença do launcher no APK não permite afirmar que a instalação do usuário foi concluída.
 
 Nenhum celular estava conectado no ADB durante esta execução. Não foram feitos uninstall, install, abertura, screenshots nem confirmação física do ícone. Não há AVD configurado no ambiente inspecionado. Essas etapas permanecem pendentes.
 
@@ -77,6 +81,6 @@ Este é um roteiro a executar, não um ensaio concluído. Demonstre primeiro no 
 
 Registrar responsável, dispositivo/API Android, data, versão/commit, resultado e caminho das imagens em `docs/evidencias/`. Não marcar sucesso sem executar. É necessária aceitação do avaliador para substituir critérios SPA/desktop pela navegação Android e dispositivos previstos.
 
-## Resultado desta execução
+## Resultado da execução anterior
 
 Build limpo gerou o APK. Após corrigir dois erros de rede, build final e lint passaram: **0 erros e 142 avisos de lint**. Backend: **19 testes aprovados**. Android/Retrofit contra API real em memória: **24 aprovados, nenhum ignorado**. Veja [evidências](evidencias/EXECUCAO.md). A validação no aparelho continua pendente.

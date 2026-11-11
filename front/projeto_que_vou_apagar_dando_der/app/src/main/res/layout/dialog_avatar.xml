@@ -1,0 +1,7 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp">
+<ImageView android:id="@+id/avatar_preview" android:layout_width="160dp" android:layout_height="160dp" android:layout_gravity="center_horizontal" android:src="@drawable/ic_person" android:contentDescription="@string/profile_avatar" />
+<TextView android:id="@+id/avatar_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:gravity="center" android:text="@string/avatar_hint" android:accessibilityLiveRegion="polite" />
+<com.google.android.material.button.MaterialButton android:id="@+id/choose_photo" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="@string/avatar_choose" app:cornerRadius="16dp" />
+<ProgressBar android:id="@+id/upload_progress" android:layout_width="32dp" android:layout_height="32dp" android:layout_gravity="center_horizontal" android:visibility="gone" />
+<TextView android:id="@+id/upload_error" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textColor="?attr/colorError" android:accessibilityLiveRegion="polite" android:visibility="gone" />
+</LinearLayout>

@@ -48,6 +48,12 @@ class PerfilFragment : Fragment() {
             if (model.state.value?.profile?.isOwner == true && childFragmentManager.findFragmentByTag("edit_profile") == null)
                 EditProfileDialogFragment().show(childFragmentManager, "edit_profile")
         }
+        val changePhoto = View.OnClickListener {
+            if (model.state.value?.profile?.isOwner == true && !model.state.value!!.saving && childFragmentManager.findFragmentByTag("avatar") == null)
+                com.example.app.users.AvatarDialogFragment().show(childFragmentManager, "avatar")
+        }
+        ui.userAvatar.setOnClickListener(changePhoto)
+        ui.changeAvatar.setOnClickListener(changePhoto)
         val share = View.OnClickListener {
             val user = model.state.value?.profile ?: return@OnClickListener
             val text = getString(R.string.profile_share_text, user.name.orEmpty(), "skippecas://users/${user.id}")
@@ -86,6 +92,11 @@ class PerfilFragment : Fragment() {
         ui.postsCount.text = getString(R.string.profile_posts, user.postsCount)
         ui.followersCount.text = getString(R.string.profile_followers, user.followersCount)
         ui.followingCount.text = getString(R.string.profile_following, user.followingCount)
+        ui.changeAvatar.visibility = if (user.isOwner) View.VISIBLE else View.GONE
+        ui.changeAvatar.isEnabled = !state.loading && !state.saving
+        ui.userAvatar.isClickable = user.isOwner && !state.loading && !state.saving
+        ui.userAvatar.isFocusable = user.isOwner
+        ui.userAvatar.contentDescription = getString(if (user.isOwner) R.string.profile_photo_choose else R.string.profile_avatar)
         ui.editProfile.visibility = if (user.isOwner) View.VISIBLE else View.GONE
         ui.editProfile.isEnabled = !state.loading && !state.saving
         Glide.with(this).load(com.example.app.network.MediaUrl.resolve(user.avatarUrl)).circleCrop().placeholder(R.drawable.ic_person)

@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import mysql from 'mysql2/promise';
 import app from '../../src/app.js';
 import pool from '../../src/config/db.js';
+import { demoImages } from '../../src/config/demoMedia.js';
 
 // Nunca executar a suíte destrutiva contra o banco da aplicação.
 const database = process.env.DB_NAME || '';
@@ -60,7 +61,7 @@ test('MVP real: schema → autenticação → vendas/feed/marketplace → favori
   const other = await account('Outro', 'vendedor');
   const product = async owner => json(await request('POST', '/api/seller/products', owner.token, {
     title: 'Volante Mustang', price: '350.90', category: 'Interior', model: 'Mustang',
-    image_url: 'https://example.com/p.jpg', location: 'Palmas',
+    image_url: demoImages.steeringWheel, location: 'Palmas',
   }), 201);
   const first = await product(seller); const second = await product(other);
   const forbidden = await request('POST', '/api/seller/products', buyer.token, {});

@@ -30,6 +30,7 @@ flowchart TD
 
 | Tela / diálogo | Estrutura esquemática | Componentes essenciais |
 | --- | --- | --- |
+| [dialog_avatar](../front/projeto_que_vou_apagar_dando_der/app/src/main/res/layout/dialog_avatar.xml) | [Imagem](imagens/wire-dialog_avatar.svg) | ImageView: avatar_preview, TextView: avatar_status, MaterialButton: choose_photo, ProgressBar: upload_progress, TextView: upload_error |
 | [dialog_edit_profile](../front/projeto_que_vou_apagar_dando_der/app/src/main/res/layout/dialog_edit_profile.xml) | [Imagem](imagens/wire-dialog_edit_profile.svg) | ImageView: avatar_preview, MaterialButton: select_avatar, TextInputEditText: name_input, TextInputEditText: email_input, TextInputEditText: bio_input, ProgressBar: save_progress |
 | [dialog_new_post](../front/projeto_que_vou_apagar_dando_der/app/src/main/res/layout/dialog_new_post.xml) | [Imagem](imagens/wire-dialog_new_post.svg) | MaterialButton: select_photo, ImageView: photo_preview, EditText: description_input, ProgressBar: post_progress, TextView: post_error |
 | [dialog_new_product](../front/projeto_que_vou_apagar_dando_der/app/src/main/res/layout/dialog_new_product.xml) | [Imagem](imagens/wire-dialog_new_product.svg) | EditText: title_input, EditText: price_input, EditText: category_input, EditText: model_input, EditText: image_input, EditText: video_input |

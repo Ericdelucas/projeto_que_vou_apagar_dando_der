@@ -1,6 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import { readFile } from 'node:fs/promises';
 import bcrypt from 'bcrypt';
+import { demoImages, demoPostMedia } from './demoMedia.js';
 
 export const demoAccounts = Object.freeze([
   { name: 'Ana Compradora', email: 'comprador@skippecas.local', role: 'comprador' },
@@ -38,6 +39,7 @@ export async function createMemoryDatabase({ seed = true } = {}) {
       const names = ['Caio Motor', 'Davi Rodas', 'Eva Peças', 'Iara Auto', 'Léo Garage',
         'Bia Lima', 'Cris Melo', 'Duda Reis', 'Gui Alves', 'Nina Luz'];
       const testHash = await bcrypt.hash(demoPassword, 12);
+      const post = database.prepare('INSERT INTO posts (user_id, description, image_url, created_at) VALUES (?, ?, ?, ?)');
       for (let i = 0; i < 10; i++) {
         const role = i < 5 ? 'vendedor' : 'comprador';
         const number = i % 5 + 1;
@@ -49,16 +51,19 @@ export async function createMemoryDatabase({ seed = true } = {}) {
         for (let day = 0; day < 14; day++) {
           const count = history[day];
           const date = new Date(); date.setUTCDate(date.getUTCDate() - (13 - day));
-          for (let n = 0; n < count; n++) database.prepare(
-            'INSERT INTO posts (user_id, description, image_url, created_at) VALUES (?, ?, ?, ?)'
-          ).run(id, `${names[i]} — publicação de teste ${day + 1}.${n + 1}`, '/demo/peca.png', date.toISOString().slice(0, 19).replace('T', ' '));
+          for (let n = 0; n < count; n++) {
+            const media = demoPostMedia[(i + day + n) % demoPostMedia.length];
+            post.run(id, `${names[i]} — ${media.caption} (Demonstração ${day + 1}.${n + 1})`,
+              media.imageUrl, date.toISOString().slice(0, 19).replace('T', ' '));
+          }
         }
       }
+      const product = database.prepare(
+        'INSERT INTO products (title, price, image_url, user_id, category, model, location) VALUES (?, ?, ?, ?, ?, ?, ?)');
+      product.run('Volante esportivo', '150.00', demoImages.steeringWheel, 2, 'Interior', 'Gol', 'Palmas');
+      product.run('Farol dianteiro', '320.90', demoImages.headlight, 3, 'Iluminação', 'Onix', 'São Paulo');
+      product.run('Roda de liga leve', '580.00', demoImages.wheel, 2, 'Rodas', 'Corolla', 'Palmas');
       database.exec(`
-        INSERT INTO products (title, price, image_url, user_id, category, model, location) VALUES
-          ('Volante esportivo', '150.00', '/demo/peca.png', 2, 'Interior', 'Gol', 'Palmas'),
-          ('Farol dianteiro', '320.90', '/demo/peca.png', 3, 'Iluminação', 'Onix', 'São Paulo'),
-          ('Roda de liga leve', '580.00', '/demo/peca.png', 2, 'Rodas', 'Corolla', 'Palmas');
         INSERT INTO posts (user_id, product_id, description, likes_count, comments_count) VALUES
           (2, 1, 'Volante disponível para seu projeto.', 12, 3),
           (3, 2, 'Farol revisado, pronto para instalar.', 8, 1),

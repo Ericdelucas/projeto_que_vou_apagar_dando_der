@@ -29,6 +29,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+        <com.google.android.material.button.MaterialButton android:id="@+id/change_avatar" style="@style/Widget.Material3.Button.TextButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/profile_photo_choose" android:visibility="gone" />
         <TextView android:id="@+id/user_bio" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:maxLines="3" android:ellipsize="end" android:textColor="?attr/colorOnSurface" />
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginVertical="12dp">
             <com.google.android.material.button.MaterialButton android:id="@+id/edit_profile" app:cornerRadius="14dp" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textSize="12sp" android:text="@string/btn_editar_perfil" />

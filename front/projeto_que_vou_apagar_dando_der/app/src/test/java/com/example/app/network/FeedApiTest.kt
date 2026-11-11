@@ -90,6 +90,28 @@ class FeedApiTest {
     }
 
     @Test
+    fun feedKeepsRemotePhotoAndFallsBackToProductWhenPostPhotoIsBlank() {
+        val server = MockWebServer(); server.start()
+        try {
+            val productUrl = "https://images.pexels.com/photos/8305224/pexels-photo-8305224.jpeg?auto=compress&cs=tinysrgb&w=960"
+            val postUrl = "https://images.pexels.com/photos/190574/pexels-photo-190574.jpeg?auto=compress&cs=tinysrgb&w=960"
+            server.enqueue(MockResponse().setBody("""[{
+                "id":1,"user_id":2,"user":{"id":2,"name":"Autopeças"},"product_id":3,
+                "image_url":"$postUrl","likes_count":0,"comments_count":0,
+                "product":{"id":3,"title":"Roda","price":"580.00","image_url":"$productUrl","user_id":2}
+            }]"""))
+            val post = api(server).getFeed().execute().body()!!.single()
+            assertEquals(postUrl, post.coverImageUrl)
+            assertEquals(postUrl, MediaUrl.resolve(post.coverImageUrl))
+            for (empty in listOf(null, "", "  ")) {
+                assertEquals(productUrl, post.copy(imageUrl = empty).coverImageUrl)
+            }
+            assertNull(post.copy(imageUrl = "", product = null).coverImageUrl)
+            assertNull(post.copy(imageUrl = null, product = post.product!!.copy(imageUrl = " ")).coverImageUrl)
+        } finally { server.shutdown() }
+    }
+
+    @Test
     fun feedCanBeEmptyAndProductCanBeRemoved() {
         val server = MockWebServer()
         server.start()

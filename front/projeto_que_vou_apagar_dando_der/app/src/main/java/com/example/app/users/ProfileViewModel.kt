@@ -106,7 +106,9 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         })
     }
 
-    private fun uploadPhoto(body: UpdateProfileRequest, photo: android.net.Uri) {
+    fun saveAvatar(photo: android.net.Uri) { uploadPhoto(null, photo) }
+
+    private fun uploadPhoto(body: UpdateProfileRequest?, photo: android.net.Uri) {
         if (current.saving || current.profile?.isOwner != true) return
         val token = tokens.getToken()
         if (token.isNullOrBlank() || token != session) { expire(); return }
@@ -125,18 +127,23 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                         update = null
                         val user = response.body()
                         if (response.isSuccessful && user != null) {
-                            mutableState.value = current.copy(profile = user, saving = false)
-                            save(body.copy(avatar_url = user.avatarUrl.orEmpty()))
+                            if (body == null) {
+                                mutableState.value = current.copy(profile = user, saving = false, error = null,
+                                    saveError = null, savedVersion = current.savedVersion + 1)
+                            } else {
+                                mutableState.value = current.copy(profile = user, saving = false)
+                                save(body.copy(avatar_url = user.avatarUrl.orEmpty()))
+                            }
                         } else {
                             response.errorBody()?.close()
                             if (response.code() == 401) expire()
-                            else mutableState.value = current.copy(saving = false, saveError = R.string.profile_save_error)
+                            else mutableState.value = current.copy(saving = false, saveError = AvatarUploadError.forStatus(response.code()))
                         }
                     }
                     override fun onFailure(call: Call<UserProfile>, error: Throwable) {
                         if (update !== call || cleared) return
                         update = null
-                        if (!call.isCanceled) mutableState.value = current.copy(saving = false, saveError = R.string.profile_save_error)
+                        if (!call.isCanceled) mutableState.value = current.copy(saving = false, saveError = R.string.avatar_network_error)
                     }
                 })
             } catch (_: Exception) {

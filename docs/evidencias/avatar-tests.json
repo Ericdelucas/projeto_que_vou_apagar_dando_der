@@ -1,0 +1,12 @@
+{
+  "tests": 33,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "apk_version": "1.3",
+  "versionCode": 4,
+  "apk_sha256": "6cade469967d3db82cc38a4791717948149113153c9651cd2f197434b759120b",
+  "lint_errors": 0,
+  "lint_warnings": 140,
+  "public_avatar_route_status_observed": 404
+}
